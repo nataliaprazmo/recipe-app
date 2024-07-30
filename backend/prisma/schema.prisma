@@ -12,4 +12,44 @@ model User {
   name              String
   email             String             @unique
   password          String
+  backgroundPicture String?
+  profilePicture    String?
+  
+  recipes           Recipe[]
+  favouriteRecipes  FavouriteRecipe[]
+}
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model Recipe {
+  id                String                @id @default(uuid())
+  ownerId           String
+  name              String
+  isPrivate         Boolean            @default(true)
+  categoryId        String?
+  photo             String
+  servingsNumber    Int
+  preparationTime   Int?               // Time in minutes
+  cuisineId         String?
+  difficultyLevel   DifficultyLevel
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  favourited        FavouriteRecipe[]
+
+  owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model FavouriteRecipe {
+  ownerId           String
+  recipeId          String
+
+  owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  favouritedRecipe  Recipe             @relation(fields:[recipeId], references: [id])
+
+  @@id([ownerId, recipeId])
 }
