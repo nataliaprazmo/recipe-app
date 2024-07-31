@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -51,6 +52,13 @@ model Recipe {
   owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   category          Category?          @relation(fields: [categoryId], references: [id])
   cuisine           Cuisine?           @relation(fields: [cuisineId], references: [id])
+
+  @@index([name])
+  @@fulltext([name], map: "Recipe_recipeFulltext_idx")
+  @@index([categoryId])
+  @@index([ownerId, isPrivate])
+  @@index([cuisineId])
+  @@index([difficultyLevel])
 }
 
 model FavouriteRecipe {
@@ -81,6 +89,9 @@ model Rating {
 
   user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId])
+  @@index([score])
 }
 
 model Ingredient {
@@ -88,6 +99,8 @@ model Ingredient {
   name              String             @unique
 
   recipes           RecipeIngredient[]
+
+  @@fulltext([name])
 }
 
 model RecipeIngredient {
@@ -100,6 +113,8 @@ model RecipeIngredient {
   recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredient        Ingredient         @relation(fields: [ingredientId], references: [id])
   measureUnit       MeasureUnit?       @relation(fields: [measureUnitId], references: [id])
+
+  @@index([ingredientId])
 }
 
 model DietaryRestriction {
@@ -117,6 +132,8 @@ model RecipeDietaryRestriction {
   dietaryRestriction DietaryRestriction @relation(fields: [restrictionId], references: [id])
 
   @@id([recipeId, restrictionId])
+
+  @@index([restrictionId])
 }
 
 model RecipeStep {
@@ -143,6 +160,8 @@ model Category {
   name              String             @unique
 
   recipes           Recipe[]
+
+  @@fulltext([name])
 }
 
 model Cuisine {
@@ -150,6 +169,8 @@ model Cuisine {
   name              String             @unique
 
   recipes           Recipe[]
+
+  @@fulltext([name])
 }
 
 model MeasureUnit {
@@ -157,4 +178,6 @@ model MeasureUnit {
   name              String             @unique
 
   ingredients       RecipeIngredient[]
+
+  @@fulltext([name])
 }
