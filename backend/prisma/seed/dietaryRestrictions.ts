@@ -1,0 +1,16 @@
+export const dietaryRestrictions = [
+	"Vegan",
+	"Vegetarian",
+	"Gluten-Free",
+	"Dairy-Free",
+	"Nut-Free",
+	"Soy-Free",
+	"Paleo",
+	"Keto",
+	"Halal",
+	"Kosher",
+	"Low-Carb",
+	"Low-Fat",
+	"Sugar-Free",
+	"Pescatarian",
+];
