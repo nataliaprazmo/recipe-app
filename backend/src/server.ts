@@ -1,10 +1,14 @@
 import Fastify from "fastify";
 import prisma from "./plugins/prisma";
+import metadataRoutes from "./routes/metadata.route";
 
 const fastify = Fastify();
 
 // register plugins
 fastify.register(prisma);
+
+// register routes
+fastify.register(metadataRoutes, { prefix: "/api" });
 
 const port = parseInt(process.env.PORT || "5000");
 const host = process.env.HOST || "127.0.0.1";

@@ -1,0 +1,23 @@
+GET http://localhost:5000 HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/categories HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/cuisines HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/measure-units HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/dietary-restrictions HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/difficulty-levels HTTP/1.1
+
+###
