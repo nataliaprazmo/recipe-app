@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import * as UserService from "../services/user.service";
+import * as UserService from "../services/user/user.service";
 import {
 	ChangeUserPasswordInput,
 	CreateUserInput,

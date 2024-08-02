@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { CreateUserInput, UpdateUserInput } from "../types/user.types";
+import { CreateUserInput, UpdateUserInput } from "../../types/user.types";
 
 export async function getAllUsers(fastify: FastifyInstance) {
 	return fastify.prisma.user.findMany();
