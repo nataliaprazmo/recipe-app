@@ -3,6 +3,8 @@ import prisma from "./plugins/prisma";
 import fastifyJwt from "@fastify/jwt";
 import metadataRoutes from "./routes/metadata.route";
 import userRoutes from "./routes/user.route";
+import { recipeRoutes } from "./routes/recipe.route";
+import { ingredientRoutes } from "./routes/ingredient.route";
 
 const fastify = Fastify();
 
@@ -21,6 +23,8 @@ declare module "@fastify/jwt" {
 // register routes
 fastify.register(metadataRoutes, { prefix: "/api" });
 fastify.register(userRoutes, { prefix: "/api/users" });
+fastify.register(ingredientRoutes, { prefix: "/api/ingredients" });
+fastify.register(recipeRoutes, { prefix: "/api/recipes" });
 
 const port = parseInt(process.env.PORT || "5000");
 const host = process.env.HOST || "127.0.0.1";
@@ -40,6 +44,7 @@ listeners.forEach((signal) => {
 const start = async () => {
 	try {
 		await fastify.listen({ port, host });
+		console.log(fastify.printRoutes());
 	} catch (err) {
 		fastify.log.error(err);
 		process.exit(1);
