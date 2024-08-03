@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { getAllCuisines } from "../services/cuisine.service";
-import { getAllCategories } from "../services/category.service";
-import { getAllMeasureUnits } from "../services/measureUnit.service";
-import { getAllDifficultyLevels } from "../services/difficultyLevel.service";
-import { getAllDietaryRestrictions } from "../services/dietaryRestriction.service";
+import { getAllCuisines } from "../services/metadata/cuisine.service";
+import { getAllCategories } from "../services/metadata/category.service";
+import { getAllMeasureUnits } from "../services/metadata/measure-unit.service";
+import { getAllDifficultyLevels } from "../services/metadata/difficulty-level.service";
+import { getAllDietaryRestrictions } from "../services/metadata/dietary-restriction.service";
 
 export async function getCategories(
 	request: FastifyRequest,

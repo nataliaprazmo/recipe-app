@@ -1,5 +1,7 @@
 import {
+	Category,
 	Ingredient,
+	Rating,
 	Recipe,
 	RecipeIngredient,
 	RecipeStep,
@@ -29,4 +31,12 @@ export type FullRecipe = Recipe & {
 	ingredients: (RecipeIngredient & { ingredient: Ingredient })[];
 	recipeSteps: (RecipeStep & { stepBullets: RecipeStepBullet[] })[];
 	dietaryRestrictions: any[];
+};
+
+export type BasicRecipe = Pick<
+	Recipe,
+	"id" | "name" | "photo" | "preparationTime" | "servingsNumber"
+> & {
+	category: Category | null;
+	ratings: Rating[];
 };

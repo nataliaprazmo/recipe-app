@@ -1,8 +1,8 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { UpdateRecipeInput, FullRecipe } from "../../types/recipe.types";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { ValidationError } from "../../errors/recipe.errors";
 import { RecipeValidationService } from "../../validation/recipe/recipe.validation";
+import { ValidationError } from "../../errors/validation.error";
 
 export class RecipeEditor {
 	private ingredientService: IngredientService;
@@ -181,5 +181,30 @@ export class RecipeEditor {
 		}
 
 		return fullRecipe as FullRecipe;
+	}
+
+	async toggleRecipePrivacy(id: string, userId: string): Promise<FullRecipe> {
+		const recipe = await this.prisma.recipe.findUnique({
+			where: { id },
+			select: { isPrivate: true, ownerId: true },
+		});
+
+		if (!recipe) {
+			throw new Error("Recipe not found");
+		}
+
+		if (recipe.ownerId !== userId) {
+			throw new Error(
+				"User does not have permission to modify this recipe"
+			);
+		}
+
+		await this.prisma.recipe.update({
+			where: { id },
+			data: { isPrivate: !recipe.isPrivate },
+		});
+
+		const updated = await this.getFullRecipe(this.prisma, id);
+		return updated;
 	}
 }

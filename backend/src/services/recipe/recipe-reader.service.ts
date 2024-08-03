@@ -1,10 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { FullRecipe } from "../../types/recipe.types";
+import { BasicRecipe, FullRecipe } from "../../types/recipe.types";
+import crypto from "crypto";
 
 export class RecipeReader {
 	constructor(private prisma: PrismaClient) {}
 
-	async getRecipeById(id: string, userId?: string): Promise<FullRecipe | null> {
+	async getRecipeById(
+		id: string,
+		userId?: string
+	): Promise<FullRecipe | null> {
 		const recipe = await this.prisma.recipe.findFirst({
 			where: {
 				id,
@@ -16,29 +20,70 @@ export class RecipeReader {
 		return recipe as FullRecipe | null;
 	}
 
-	async getRecipesByUser(userId: string, includePrivate: boolean = true): Promise<FullRecipe[]> {
+	async getRecipesByUser(
+		userId: string,
+		includePrivate: boolean = true
+	): Promise<BasicRecipe[]> {
 		const recipes = await this.prisma.recipe.findMany({
 			where: {
 				ownerId: userId,
 				...(includePrivate ? {} : { isPrivate: false }),
 			},
-			include: this.getRecipeIncludeOptions(),
-			orderBy: { createdAt: 'desc' },
+			orderBy: { createdAt: "desc" },
+			select: this.getBasicRecipeSelectOptions(),
 		});
 
-		return recipes as FullRecipe[];
+		return recipes as BasicRecipe[];
 	}
 
-	async getPublicRecipes(limit?: number, offset?: number): Promise<FullRecipe[]> {
-		const recipes = await this.prisma.recipe.findMany({
+	async getRecipeOfTheDay(): Promise<BasicRecipe | null> {
+		const totalCount = await this.prisma.recipe.count({
 			where: { isPrivate: false },
-			include: this.getRecipeIncludeOptions(),
-			orderBy: { createdAt: 'desc' },
-			...(limit && { take: limit }),
-			...(offset && { skip: offset }),
 		});
 
-		return recipes as FullRecipe[];
+		if (totalCount === 0) return null;
+
+		const today = new Date().toISOString().split("T")[0];
+		const hash = crypto.createHash("sha256").update(today).digest("hex");
+
+		const hashInt = parseInt(hash.slice(0, 8), 16);
+		const index = hashInt % totalCount;
+
+		const [recipe] = await this.prisma.recipe.findMany({
+			where: { isPrivate: false },
+			skip: index,
+			take: 1,
+			select: this.getBasicRecipeSelectOptions(),
+		});
+
+		return recipe ?? null;
+	}
+
+	async getPublicRecipes(
+		limit?: number,
+		offset?: number
+	): Promise<BasicRecipe[]> {
+		const recipes = await this.prisma.recipe.findMany({
+			where: { isPrivate: false },
+			orderBy: { createdAt: "desc" },
+			...(limit && { take: limit }),
+			...(offset && { skip: offset }),
+			select: this.getBasicRecipeSelectOptions(),
+		});
+
+		return recipes as BasicRecipe[];
+	}
+
+	private getBasicRecipeSelectOptions() {
+		return {
+			id: true,
+			name: true,
+			photo: true,
+			preparationTime: true,
+			servingsNumber: true,
+			category: true,
+			ratings: true,
+		};
 	}
 
 	private getRecipeIncludeOptions() {

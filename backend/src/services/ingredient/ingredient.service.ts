@@ -3,9 +3,9 @@ import {
 	CreateIngredientInput,
 	ResolvedIngredient,
 } from "../../types/ingredient.types";
-import { IngredientResolver } from "./ingredientResolver.service";
+import { IngredientResolver } from "./ingredient-resolver.service";
 import { IngredientCreator } from "./ingredient-creator.service";
-import { IngredientReader } from "./ingredientReader.service";
+import { IngredientReader } from "./ingredient-reader.service";
 import { IngredientNormalizer } from "./ingredient-normalizer.service";
 
 type PrismaTransactionClient = Parameters<

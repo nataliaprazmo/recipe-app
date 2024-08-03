@@ -1,10 +1,10 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { CreateRecipeInput, FullRecipe } from "../../types/recipe.types";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { ValidationError } from "../../errors/recipe.errors";
 import { CreateStepInput } from "../../types/recipe-step.types";
 import { CreateIngredientInput } from "../../types/ingredient.types";
 import { RecipeValidationService } from "../../validation/recipe/recipe.validation";
+import { ValidationError } from "../../errors/validation.error";
 
 export class RecipeCreator {
 	private ingredientService: IngredientService;
