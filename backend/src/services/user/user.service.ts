@@ -1,47 +1,40 @@
-import { FastifyInstance } from "fastify";
 import { CreateUserInput, UpdateUserInput } from "../../types/user.types";
+import { PrismaClient, User } from "@prisma/client";
 
-export async function getAllUsers(fastify: FastifyInstance) {
-	return fastify.prisma.user.findMany();
-}
+export class UserService {
+	constructor(private prisma: PrismaClient) {}
 
-export async function getUserById(fastify: FastifyInstance, id: string) {
-	return fastify.prisma.user.findUnique({ where: { id } });
-}
+	async getAllUsers(): Promise<User[]> {
+		return this.prisma.user.findMany();
+	}
 
-export async function getUserByEmail(fastify: FastifyInstance, email: string) {
-	return fastify.prisma.user.findUnique({ where: { email } });
-}
+	async getUserById(id: string): Promise<User | null> {
+		return this.prisma.user.findUnique({ where: { id } });
+	}
 
-export async function createUser(
-	fastify: FastifyInstance,
-	data: CreateUserInput
-) {
-	return fastify.prisma.user.create({ data });
-}
+	async getUserByEmail(email: string): Promise<User | null> {
+		return this.prisma.user.findUnique({ where: { email } });
+	}
 
-export async function updateUser(
-	fastify: FastifyInstance,
-	id: string,
-	data: UpdateUserInput
-) {
-	return fastify.prisma.user.update({
-		where: { id },
-		data,
-	});
-}
+	async createUser(data: CreateUserInput): Promise<User> {
+		return this.prisma.user.create({ data });
+	}
 
-export async function updateUserPassword(
-	fastify: FastifyInstance,
-	id: string,
-	password: string
-) {
-	return fastify.prisma.user.update({
-		where: { id },
-		data: { password },
-	});
-}
+	async updateUser(id: string, data: UpdateUserInput): Promise<User> {
+		return this.prisma.user.update({
+			where: { id },
+			data,
+		});
+	}
 
-export async function deleteUser(fastify: FastifyInstance, id: string) {
-	return fastify.prisma.user.delete({ where: { id } });
+	async updateUserPassword(id: string, password: string): Promise<User> {
+		return this.prisma.user.update({
+			where: { id },
+			data: { password },
+		});
+	}
+
+	async deleteUser(id: string): Promise<User> {
+		return this.prisma.user.delete({ where: { id } });
+	}
 }

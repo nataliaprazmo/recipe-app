@@ -12,14 +12,7 @@ class RecipeController {
 	): Promise<void> {
 		try {
 			const input = request.body;
-			const ownerId = request.user?.id;
-
-			if (!ownerId) {
-				await reply
-					.code(401)
-					.send({ error: "Authentication required" });
-				return;
-			}
+			const ownerId = request.user.id;
 
 			const recipe = await this.recipeService.createRecipe(
 				input,
@@ -38,7 +31,7 @@ class RecipeController {
 	): Promise<void> {
 		try {
 			const { id } = request.params;
-			const userId = request.user?.id;
+			const userId = request.user.id;
 
 			const recipe = await this.recipeService.getRecipeById(id, userId);
 
@@ -59,15 +52,17 @@ class RecipeController {
 
 	async getRecipesByUser(
 		request: FastifyRequest<{
-			Params: { userId: string };
+			Params: { userId?: string };
 			Querystring: { includePrivate?: boolean };
 		}>,
 		reply: FastifyReply
 	): Promise<void> {
 		try {
-			const { userId } = request.params;
+			const userId = request.params.userId
+				? request.params.userId
+				: request.user.id;
 			const { includePrivate = false } = request.query;
-			const requesterId = request.user?.id;
+			const requesterId = request.user.id;
 
 			const shouldIncludePrivate =
 				includePrivate && requesterId === userId;
@@ -136,14 +131,7 @@ class RecipeController {
 	): Promise<void> {
 		try {
 			const { id } = request.params;
-			const userId = request.user?.id;
-
-			if (!userId) {
-				await reply
-					.code(401)
-					.send({ error: "Authentication required" });
-				return;
-			}
+			const userId = request.user.id;
 
 			const recipe = await this.recipeService.toggleRecipePrivacy(
 				id,
@@ -177,14 +165,7 @@ class RecipeController {
 		try {
 			const { id } = request.params;
 			const input = request.body;
-			const userId = request.user?.id;
-
-			if (!userId) {
-				await reply
-					.code(401)
-					.send({ error: "Authentication required" });
-				return;
-			}
+			const userId = request.user.id;
 
 			const recipe = await this.recipeService.updateRecipe(
 				id,
@@ -215,14 +196,7 @@ class RecipeController {
 	): Promise<void> {
 		try {
 			const { id } = request.params;
-			const userId = request.user?.id;
-
-			if (!userId) {
-				await reply
-					.code(401)
-					.send({ error: "Authentication required" });
-				return;
-			}
+			const userId = request.user.id;
 
 			await this.recipeService.deleteRecipe(id, userId);
 			await reply.code(204).send({ message: "Recipe deleted" });

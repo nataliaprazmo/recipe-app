@@ -1,22 +1,26 @@
 import { FastifyInstance } from "fastify";
 import { CreateIngredientInput } from "../types/ingredient.types";
-import { Ingredient, PrismaClient } from "@prisma/client";
+import { Ingredient } from "@prisma/client";
 import { createIngredientController } from "../controllers/ingredient.controller";
 
 export async function ingredientRoutes(fastify: FastifyInstance) {
-	const prisma = new PrismaClient();
-	const ingredientController = createIngredientController(prisma);
+	const ingredientController = createIngredientController(fastify.prisma);
 
 	fastify.post<{
 		Body: CreateIngredientInput;
 		Reply: Ingredient;
-	}>("/", ingredientController.createIngredient.bind(ingredientController));
+	}>(
+		"/",
+		{ preHandler: [fastify.auth] },
+		ingredientController.createIngredient.bind(ingredientController)
+	);
 
 	fastify.post<{
 		Body: CreateIngredientInput[];
 		Reply: Ingredient[];
 	}>(
 		"/bulk",
+		{ preHandler: [fastify.auth] },
 		ingredientController.createManyIngredients.bind(ingredientController)
 	);
 
@@ -25,6 +29,7 @@ export async function ingredientRoutes(fastify: FastifyInstance) {
 		Reply: Ingredient | { error: string };
 	}>(
 		"/:id",
+		{ preHandler: [fastify.auth] },
 		ingredientController.getIngredientById.bind(ingredientController)
 	);
 
@@ -33,6 +38,7 @@ export async function ingredientRoutes(fastify: FastifyInstance) {
 		Reply: Ingredient | { error: string };
 	}>(
 		"/name/:name",
+		{ preHandler: [fastify.auth] },
 		ingredientController.getIngredientByName.bind(ingredientController)
 	);
 
@@ -41,19 +47,25 @@ export async function ingredientRoutes(fastify: FastifyInstance) {
 		Reply: Ingredient[];
 	}>(
 		"/by-names",
+		{ preHandler: [fastify.auth] },
 		ingredientController.getIngredientsByNames.bind(ingredientController)
 	);
 
 	fastify.get<{
 		Querystring: { limit?: number; offset?: number };
 		Reply: Ingredient[];
-	}>("/", ingredientController.getAllIngredients.bind(ingredientController));
+	}>(
+		"/",
+		{ preHandler: [fastify.auth] },
+		ingredientController.getAllIngredients.bind(ingredientController)
+	);
 
 	fastify.get<{
 		Querystring: { q: string; limit?: number };
 		Reply: Ingredient[];
 	}>(
 		"/search",
+		{ preHandler: [fastify.auth] },
 		ingredientController.searchIngredients.bind(ingredientController)
 	);
 
@@ -61,6 +73,7 @@ export async function ingredientRoutes(fastify: FastifyInstance) {
 		Reply: { count: number };
 	}>(
 		"/count",
+		{ preHandler: [fastify.auth] },
 		ingredientController.getIngredientsCount.bind(ingredientController)
 	);
 }

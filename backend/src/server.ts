@@ -1,26 +1,20 @@
 import Fastify from "fastify";
 import prisma from "./plugins/prisma";
-import fastifyJwt from "@fastify/jwt";
 import metadataRoutes from "./routes/metadata.route";
 import userRoutes from "./routes/user.route";
 import { recipeRoutes } from "./routes/recipe.route";
 import { ingredientRoutes } from "./routes/ingredient.route";
+import auth from "./plugins/auth";
+import authRoutes from "./routes/auth.route";
 
 const fastify = Fastify();
 
 // register plugins
 fastify.register(prisma);
-
-declare module "@fastify/jwt" {
-	interface FastifyJWT {
-		user: {
-			id: string;
-			email: string;
-		};
-	}
-}
+fastify.register(auth);
 
 // register routes
+fastify.register(authRoutes, { prefix: "/api/auth" });
 fastify.register(metadataRoutes, { prefix: "/api" });
 fastify.register(userRoutes, { prefix: "/api/users" });
 fastify.register(ingredientRoutes, { prefix: "/api/ingredients" });
