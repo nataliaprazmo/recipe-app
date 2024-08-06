@@ -1,5 +1,9 @@
-import { FastifyInstance } from "fastify";
+import { PrismaClient } from "@prisma/client";
 
-export async function getAllDietaryRestrictions(fastify: FastifyInstance) {
-	return fastify.prisma.dietaryRestriction.findMany();
+export class DietaryRestrictionsService {
+	constructor(private prisma: PrismaClient) {}
+
+	async getAllDietaryRestrictions() {
+		return this.prisma.dietaryRestriction.findMany();
+	}
 }

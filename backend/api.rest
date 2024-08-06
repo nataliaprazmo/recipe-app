@@ -51,15 +51,11 @@ GET http://localhost:5000/api/users/email HTTP/1.1
 
 ###
 
-GET http://localhost:5000/api/users
+GET http://localhost:5000/api/users HTTP/1.1
 
 ###
 
-GET http://localhost:5000/api/users/all
-
-###
-
-GET http://localhost:5000/api/recipes/public HTTP/1.1
+GET http://localhost:5000/api/users/all HTTP/1.1
 
 ###
 

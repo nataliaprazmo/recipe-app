@@ -1,5 +1,9 @@
-import { FastifyInstance } from "fastify";
+import { PrismaClient } from "@prisma/client";
 
-export async function getAllCuisines(fastify: FastifyInstance) {
-	return fastify.prisma.cuisine.findMany();
+export class CuisineService {
+	constructor(private prisma: PrismaClient) {}
+
+	async getAllCuisines() {
+		return this.prisma.cuisine.findMany();
+	}
 }

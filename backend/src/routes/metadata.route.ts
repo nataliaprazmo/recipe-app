@@ -1,13 +1,45 @@
 import { FastifyInstance } from "fastify";
-import * as MetadataController from "../controllers/metadata.controller";
+import { createMetadataController } from "../controllers/metadata.controller";
+import {
+	Category,
+	Cuisine,
+	DietaryRestriction,
+	DifficultyLevel,
+	MeasureUnit,
+} from "@prisma/client";
 
 export default async function metadataRoutes(fastify: FastifyInstance) {
-	fastify.get(
+	const metadataController = createMetadataController(fastify.prisma);
+
+	fastify.get<{
+		Reply: { message: string; dietaryRestrictions: DietaryRestriction[] };
+	}>(
 		"/dietary-restrictions",
-		MetadataController.getDietaryRestrictions
+		metadataController.getDietaryRestrictions.bind(metadataController)
 	);
-	fastify.get("/categories", MetadataController.getCategories);
-	fastify.get("/cuisines", MetadataController.getCuisines);
-	fastify.get("/measure-units", MetadataController.getMeasureUnits);
-	fastify.get("/difficulty-levels", MetadataController.getDifficultyLevels);
+
+	fastify.get<{
+		Reply: { message: string; categories: Category[] } | { error: string };
+	}>(
+		"/categories",
+		metadataController.getCategories.bind(metadataController)
+	);
+
+	fastify.get<{
+		Reply: { message: string; cuisines: Cuisine[] };
+	}>("/cuisines", metadataController.getCuisines.bind(metadataController));
+
+	fastify.get<{
+		Reply: { message: string; measureUnits: MeasureUnit[] };
+	}>(
+		"/measure-units",
+		metadataController.getMeasureUnits.bind(metadataController)
+	);
+
+	fastify.get<{
+		Reply: { message: string; difficultyLevels: DifficultyLevel[] };
+	}>(
+		"/difficulty-levels",
+		metadataController.getDifficultyLevels.bind(metadataController)
+	);
 }

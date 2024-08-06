@@ -1,83 +1,113 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { getAllCuisines } from "../services/metadata/cuisine.service";
-import { getAllCategories } from "../services/metadata/category.service";
-import { getAllMeasureUnits } from "../services/metadata/measure-unit.service";
 import { getAllDifficultyLevels } from "../services/metadata/difficulty-level.service";
-import { getAllDietaryRestrictions } from "../services/metadata/dietary-restriction.service";
+import { CategoryService } from "../services/metadata/category.service";
+import { PrismaClient } from "@prisma/client";
+import { CuisineService } from "../services/metadata/cuisine.service";
+import { MeasureUnitService } from "../services/metadata/measure-unit.service";
+import { DietaryRestrictionsService } from "../services/metadata/dietary-restriction.service";
 
-export async function getCategories(
-	request: FastifyRequest,
-	reply: FastifyReply
-) {
-	try {
-		const categories = await getAllCategories(request.server);
-		reply.send({ message: "Categories fetched successfully", categories });
-	} catch (error) {
-		reply.status(500).send({ message: "Error fetching categories", error });
+class MetadataController {
+	constructor(
+		private categoryService: CategoryService,
+		private cuisineService: CuisineService,
+		private measureUnitService: MeasureUnitService,
+		private dietaryRestrictionsService: DietaryRestrictionsService
+	) {}
+
+	async getCategories(
+		request: FastifyRequest,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const categories = await this.categoryService.getAllCategories();
+			reply.send({
+				message: "Categories fetched successfully",
+				categories,
+			});
+		} catch (error) {
+			reply
+				.status(500)
+				.send({ message: "Error fetching categories", error });
+		}
+	}
+
+	async getCuisines(
+		request: FastifyRequest,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const cuisines = await this.cuisineService.getAllCuisines();
+			reply.send({ message: "Cuisines fetched successfully", cuisines });
+		} catch (error) {
+			reply
+				.status(500)
+				.send({ message: "Error fetching cuisines", error });
+		}
+	}
+
+	async getMeasureUnits(
+		request: FastifyRequest,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const measureUnits =
+				await this.measureUnitService.getAllMeasureUnits();
+			reply.send({
+				message: "Measure units fetched successfully",
+				measureUnits,
+			});
+		} catch (error) {
+			reply
+				.status(500)
+				.send({ message: "Error fetching measure units", error });
+		}
+	}
+
+	getDifficultyLevels(request: FastifyRequest, reply: FastifyReply): void {
+		try {
+			const difficultyLevels = getAllDifficultyLevels();
+			reply.send({
+				message: "Difficulty levels fetched successfully",
+				difficultyLevels,
+			});
+		} catch (error) {
+			reply
+				.status(500)
+				.send({ message: "Error fetching difficulty levels", error });
+		}
+	}
+
+	async getDietaryRestrictions(
+		request: FastifyRequest,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const dietaryRestrictions =
+				await this.dietaryRestrictionsService.getAllDietaryRestrictions();
+			reply.send({
+				message: "Dietary restrictions fetched successfully",
+				dietaryRestrictions,
+			});
+		} catch (error) {
+			reply.status(500).send({
+				message: "Error fetching dietary restrictions",
+				error,
+			});
+		}
 	}
 }
 
-export async function getCuisines(
-	request: FastifyRequest,
-	reply: FastifyReply
-) {
-	try {
-		const cuisines = await getAllCuisines(request.server);
-		reply.send({ message: "Cuisines fetched successfully", cuisines });
-	} catch (error) {
-		reply.status(500).send({ message: "Error fetching cuisines", error });
-	}
-}
-
-export async function getMeasureUnits(
-	request: FastifyRequest,
-	reply: FastifyReply
-) {
-	try {
-		const measureUnits = await getAllMeasureUnits(request.server);
-		reply.send({
-			message: "Measure units fetched successfully",
-			measureUnits,
-		});
-	} catch (error) {
-		reply
-			.status(500)
-			.send({ message: "Error fetching measure units", error });
-	}
-}
-
-export function getDifficultyLevels(
-	request: FastifyRequest,
-	reply: FastifyReply
-) {
-	try {
-		const difficultyLevels = getAllDifficultyLevels();
-		reply.send({
-			message: "Difficulty levels fetched successfully",
-			difficultyLevels,
-		});
-	} catch (error) {
-		reply
-			.status(500)
-			.send({ message: "Error fetching difficulty levels", error });
-	}
-}
-
-export async function getDietaryRestrictions(
-	request: FastifyRequest,
-	reply: FastifyReply
-) {
-	try {
-		const dietaryRestrictions = await getAllDietaryRestrictions(
-			request.server
-		);
-		reply.send({
-			message: "Dietary restrictions fetched successfully",
-			dietaryRestrictions,
-		});
-	} catch (error) {
-		reply
-			.status(500)
-			.send({ message: "Error fetching dietary restrictions", error });
-	}
-}
+export const createMetadataController = (
+	prisma: PrismaClient
+): MetadataController => {
+	const categoryService = new CategoryService(prisma);
+	const cuisineService = new CuisineService(prisma);
+	const measureUnitService = new MeasureUnitService(prisma);
+	const dietaryRestrictionsService = new DietaryRestrictionsService(prisma);
+	return new MetadataController(
+		categoryService,
+		cuisineService,
+		measureUnitService,
+		dietaryRestrictionsService
+	);
+};

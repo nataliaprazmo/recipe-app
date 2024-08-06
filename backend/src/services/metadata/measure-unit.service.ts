@@ -1,5 +1,8 @@
-import { FastifyInstance } from "fastify";
+import { PrismaClient } from "@prisma/client";
 
-export async function getAllMeasureUnits(fastify: FastifyInstance) {
-	return fastify.prisma.measureUnit.findMany();
+export class MeasureUnitService {
+	constructor(private prisma: PrismaClient) {}
+	async getAllMeasureUnits() {
+		return this.prisma.measureUnit.findMany();
+	}
 }

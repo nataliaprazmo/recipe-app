@@ -1,5 +1,9 @@
-import { FastifyInstance } from "fastify";
+import { PrismaClient } from "@prisma/client";
 
-export async function getAllCategories(fastify: FastifyInstance) {
-	return fastify.prisma.category.findMany();
+export class CategoryService {
+	constructor(private prisma: PrismaClient) {}
+
+	async getAllCategories() {
+		return this.prisma.category.findMany();
+	}
 }
