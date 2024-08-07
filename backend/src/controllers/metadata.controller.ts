@@ -20,12 +20,13 @@ class MetadataController {
 	): Promise<void> {
 		try {
 			const categories = await this.categoryService.getAllCategories();
-			reply.send({
+			await reply.send({
 				message: "Categories fetched successfully",
 				categories,
 			});
 		} catch (error) {
-			reply
+			request.log.error("Error fetching categories", error);
+			await reply
 				.status(500)
 				.send({ message: "Error fetching categories", error });
 		}
@@ -37,9 +38,13 @@ class MetadataController {
 	): Promise<void> {
 		try {
 			const cuisines = await this.cuisineService.getAllCuisines();
-			reply.send({ message: "Cuisines fetched successfully", cuisines });
+			await reply.send({
+				message: "Cuisines fetched successfully",
+				cuisines,
+			});
 		} catch (error) {
-			reply
+			request.log.error("Error fetching cuisines", error);
+			await reply
 				.status(500)
 				.send({ message: "Error fetching cuisines", error });
 		}
@@ -52,26 +57,31 @@ class MetadataController {
 		try {
 			const measureUnits =
 				await this.measureUnitService.getAllMeasureUnits();
-			reply.send({
+			await reply.send({
 				message: "Measure units fetched successfully",
 				measureUnits,
 			});
 		} catch (error) {
-			reply
+			request.log.error("Error fetching measure units", error);
+			await reply
 				.status(500)
 				.send({ message: "Error fetching measure units", error });
 		}
 	}
 
-	getDifficultyLevels(request: FastifyRequest, reply: FastifyReply): void {
+	async getDifficultyLevels(
+		request: FastifyRequest,
+		reply: FastifyReply
+	): Promise<void> {
 		try {
 			const difficultyLevels = getAllDifficultyLevels();
-			reply.send({
+			await reply.send({
 				message: "Difficulty levels fetched successfully",
 				difficultyLevels,
 			});
 		} catch (error) {
-			reply
+			request.log.error("Error fetching difficulty levels", error);
+			await reply
 				.status(500)
 				.send({ message: "Error fetching difficulty levels", error });
 		}
@@ -84,12 +94,13 @@ class MetadataController {
 		try {
 			const dietaryRestrictions =
 				await this.dietaryRestrictionsService.getAllDietaryRestrictions();
-			reply.send({
+			await reply.send({
 				message: "Dietary restrictions fetched successfully",
 				dietaryRestrictions,
 			});
 		} catch (error) {
-			reply.status(500).send({
+			request.log.error("Error fetching dietary restrictions", error);
+			await reply.status(500).send({
 				message: "Error fetching dietary restrictions",
 				error,
 			});

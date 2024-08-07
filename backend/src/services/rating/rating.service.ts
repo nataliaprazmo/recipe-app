@@ -18,11 +18,18 @@ export class RatingService {
 		});
 	}
 
-	async updateRating(id: string, score: number): Promise<Rating> {
-		return this.prisma.rating.update({
+	async updateRating(data: RatingBase, score: number): Promise<Rating> {
+		const existingRating = await this.prisma.rating.findFirst({
 			where: {
-				id: id,
+				AND: [{ userId: data.userId }, { recipeId: data.recipeId }],
 			},
+		});
+		if (!existingRating) {
+			throw Error("Rating with given id doesn't exist");
+		}
+
+		return this.prisma.rating.update({
+			where: { id: existingRating.id },
 			data: {
 				score: score,
 			},

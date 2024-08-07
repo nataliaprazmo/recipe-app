@@ -13,15 +13,27 @@ export class CommentService {
 
 	async updateComment(
 		id: string,
+		userId: string,
 		content: UpdateCommentInput
 	): Promise<Comment> {
+		const existingComment = await this.getCommentById(id);
+
+		if (existingComment?.ownerId !== userId) {
+			throw Error("You do not have permission to update this comment");
+		}
 		return this.prisma.comment.update({
 			where: { id },
 			data: content,
 		});
 	}
 
-	async deleteComment(id: string): Promise<Comment> {
+	async deleteComment(id: string, userId: string): Promise<Comment> {
+		const existingComment = await this.getCommentById(id);
+
+		if (existingComment?.ownerId !== userId) {
+			throw Error("You do not have permission to delete this comment");
+		}
+
 		return this.prisma.comment.delete({
 			where: { id },
 		});
@@ -36,6 +48,12 @@ export class CommentService {
 	async getCommentsByUser(ownerId: string): Promise<Comment[] | null> {
 		return this.prisma.comment.findMany({
 			where: { ownerId },
+		});
+	}
+
+	async getCommentById(id: string): Promise<Comment | null> {
+		return this.prisma.comment.findUnique({
+			where: { id },
 		});
 	}
 }

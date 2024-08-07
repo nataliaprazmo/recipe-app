@@ -6,12 +6,14 @@ import {
 	CreateUserInput,
 	UpdateUserInput,
 } from "../types/user.types";
-import { createRecipeController } from "../controllers/recipe.controller";
 import { BasicRecipe } from "../types/recipe.types";
+import { userRecipeRoutes } from "./recipe.route";
+import { userCommentRoutes } from "./comment.route";
+import { userFavouriteRoutes } from "./favourite.route";
+import { userRatingRoutes } from "./rating.route";
 
 export default async function userRoutes(fastify: FastifyInstance) {
 	const userController = createUserController(fastify.prisma);
-	const recipeController = createRecipeController(fastify.prisma);
 
 	// TODO helper only
 	fastify.get<{
@@ -65,24 +67,15 @@ export default async function userRoutes(fastify: FastifyInstance) {
 		userController.deleteUser.bind(userController)
 	);
 
-	// users recipes
-	fastify.get<{
-		Params: { userId?: string };
-		Querystring: { includePrivate?: boolean };
-		Reply: BasicRecipe[];
-	}>(
-		"/recipes",
-		{ preHandler: [fastify.auth] },
-		recipeController.getRecipesByUser.bind(recipeController)
-	);
+	// recipes
+	fastify.register(userRecipeRoutes, { prefix: "/recipes" });
 
-	fastify.get<{
-		Params: { userId?: string };
-		Querystring: { includePrivate?: boolean };
-		Reply: BasicRecipe[];
-	}>(
-		"/:userId/recipes",
-		{ preHandler: [fastify.auth] },
-		recipeController.getRecipesByUser.bind(recipeController)
-	);
+	// comments
+	fastify.register(userCommentRoutes, { prefix: "/comments" });
+
+	// favourites
+	fastify.register(userFavouriteRoutes, { prefix: "/favourites" });
+
+	// ratings
+	fastify.register(userRatingRoutes, { prefix: "/ratings" });
 }

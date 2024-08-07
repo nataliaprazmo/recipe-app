@@ -6,6 +6,8 @@ import {
 	UpdateRecipeInput,
 } from "../types/recipe.types";
 import { createRecipeController } from "../controllers/recipe.controller";
+import { recipeCommentRoutes } from "./comment.route";
+import { recipeRatingRoutes } from "./rating.route";
 
 export async function recipeRoutes(fastify: FastifyInstance) {
 	const recipeController = createRecipeController(fastify.prisma);
@@ -65,5 +67,35 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 		"/:id",
 		{ preHandler: [fastify.auth] },
 		recipeController.deleteRecipe.bind(recipeController)
+	);
+
+	// comments
+	fastify.register(recipeCommentRoutes, { prefix: "/comments" });
+
+	// ratings
+	fastify.register(recipeRatingRoutes, { prefix: "/ratings" });
+}
+
+export async function userRecipeRoutes(fastify: FastifyInstance) {
+	const recipeController = createRecipeController(fastify.prisma);
+
+	fastify.get<{
+		Params: { userId?: string };
+		Querystring: { includePrivate?: boolean };
+		Reply: BasicRecipe[];
+	}>(
+		"/",
+		{ preHandler: [fastify.auth] },
+		recipeController.getRecipesByUser.bind(recipeController)
+	);
+
+	fastify.get<{
+		Params: { userId?: string };
+		Querystring: { includePrivate?: boolean };
+		Reply: BasicRecipe[];
+	}>(
+		"/:userId",
+		{ preHandler: [fastify.auth] },
+		recipeController.getRecipesByUser.bind(recipeController)
 	);
 }
