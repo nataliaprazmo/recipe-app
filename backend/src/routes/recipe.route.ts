@@ -3,11 +3,13 @@ import {
 	BasicRecipe,
 	CreateRecipeInput,
 	FullRecipe,
+	RecipeFilterInput,
 	UpdateRecipeInput,
 } from "../types/recipe.types";
 import { createRecipeController } from "../controllers/recipe.controller";
 import { recipeCommentRoutes } from "./comment.route";
 import { recipeRatingRoutes } from "./rating.route";
+import { Recipe } from "@prisma/client";
 
 export async function recipeRoutes(fastify: FastifyInstance) {
 	const recipeController = createRecipeController(fastify.prisma);
@@ -67,6 +69,12 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 		"/:id",
 		{ preHandler: [fastify.auth] },
 		recipeController.deleteRecipe.bind(recipeController)
+	);
+
+	fastify.get<{ Params: RecipeFilterInput; Reply: Recipe[] }>(
+		"/filtered",
+		{ preHandler: [fastify.auth] },
+		recipeController.getFilteredAndSortedRecipes.bind(recipeController)
 	);
 
 	// comments

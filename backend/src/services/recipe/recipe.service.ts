@@ -1,26 +1,30 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Recipe } from "@prisma/client";
 import {
 	BasicRecipe,
 	CreateRecipeInput,
 	FullRecipe,
+	RecipeFilterInput,
 	UpdateRecipeInput,
 } from "../../types/recipe.types";
 import { RecipeCreator } from "./recipe-creator.service";
 import { RecipeReader } from "./recipe-reader.service";
 import { RecipeEditor } from "./recipe-editor.service";
 import { RecipeRemover } from "./recipe-remover.service";
+import { RecipeFiltering } from "./recipe-filtering.service";
 
 export class RecipeService {
 	private recipeCreator: RecipeCreator;
 	private recipeReader: RecipeReader;
 	private recipeEditor: RecipeEditor;
 	private recipeRemover: RecipeRemover;
+	private recipeFiltering: RecipeFiltering;
 
 	constructor(private prisma: PrismaClient) {
 		this.recipeCreator = new RecipeCreator(prisma);
 		this.recipeReader = new RecipeReader(prisma);
 		this.recipeEditor = new RecipeEditor(prisma);
 		this.recipeRemover = new RecipeRemover(prisma);
+		this.recipeFiltering = new RecipeFiltering(prisma);
 	}
 
 	async createRecipe(
@@ -69,5 +73,15 @@ export class RecipeService {
 
 	async deleteRecipe(id: string, userId: string): Promise<void> {
 		return await this.recipeRemover.deleteRecipe(id, userId);
+	}
+
+	async getFilteredAndSortedRecipes(
+		filters: RecipeFilterInput,
+		searcherId?: string
+	): Promise<Recipe[]> {
+		return await this.recipeFiltering.getFilteredAndSortedRecipes(
+			filters,
+			searcherId
+		);
 	}
 }
