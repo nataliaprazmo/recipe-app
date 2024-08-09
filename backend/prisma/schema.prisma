@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(uuid())
+  name              String
+  email             String             @unique
+  password          String
+  backgroundPicture String?
+  profilePicture    String?
+  
+  recipes           Recipe[]
+  favouriteRecipes  FavouriteRecipe[]
+  comments          Comment[]
+  ratings           Rating[]
+}
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model Recipe {
+  id                String                @id @default(uuid())
+  ownerId           String
+  name              String
+  isPrivate         Boolean            @default(true)
+  categoryId        String?
+  photo             String
+  servingsNumber    Int
+  preparationTime   Int?               // Time in minutes
+  cuisineId         String?
+  difficultyLevel   DifficultyLevel
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  dietaryRestrictions RecipeDietaryRestriction[]
+  comments          Comment[]          
+  ratings           Rating[]
+  ingredients       RecipeIngredient[]       
+  recipeSteps       RecipeStep[]
+  favourited        FavouriteRecipe[]
+
+  owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  category          Category?          @relation(fields: [categoryId], references: [id])
+  cuisine           Cuisine?           @relation(fields: [cuisineId], references: [id])
+
+  @@index([name])
+  @@fulltext([name], map: "Recipe_recipeFulltext_idx")
+  @@index([categoryId])
+  @@index([ownerId, isPrivate])
+  @@index([cuisineId])
+  @@index([difficultyLevel])
+}
+
+model FavouriteRecipe {
+  ownerId           String
+  recipeId          String
+
+  owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  favouritedRecipe  Recipe             @relation(fields:[recipeId], references: [id])
+
+  @@id([ownerId, recipeId])
+}
+
+model Comment {
+  id                String             @id @default(uuid())
+  content           String
+  ownerId           String
+  recipeId          String
+
+  owner             User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model Rating {
+  id                String             @id @default(uuid())
+  recipeId          String
+  userId            String
+  score             Int
+
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId])
+  @@index([score])
+}
+
+model Ingredient {
+  id                String             @id @default(uuid())
+  name              String             @unique
+
+  recipes           RecipeIngredient[]
+
+  @@fulltext([name])
+}
+
+model RecipeIngredient {
+  id                String             @id @default(uuid())
+  recipeId          String
+  ingredientId      String 
+  number            Float?
+  measureUnitId     String?
+  
+  recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient        Ingredient         @relation(fields: [ingredientId], references: [id])
+  measureUnit       MeasureUnit?       @relation(fields: [measureUnitId], references: [id])
+
+  @@index([ingredientId])
+}
+
+model DietaryRestriction {
+  id                String             @id @default(uuid())
+  name              String             @unique
+
+  recipeRestrictions RecipeDietaryRestriction[]
+}
+
+model RecipeDietaryRestriction {
+  recipeId          String
+  restrictionId     String
+  
+  recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  dietaryRestriction DietaryRestriction @relation(fields: [restrictionId], references: [id])
+
+  @@id([recipeId, restrictionId])
+
+  @@index([restrictionId])
+}
+
+model RecipeStep {
+  id                String             @id @default(uuid())
+  name              String
+  stepNumber        Int
+  recipeId          String
+  
+  stepBullets      RecipeStepBullet[]
+
+  recipe            Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model RecipeStepBullet {
+  id                String             @id @default(uuid())
+  content           String
+  stepId            String
+  
+  step              RecipeStep         @relation(fields: [stepId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id                String             @id @default(uuid())
+  name              String             @unique
+
+  recipes           Recipe[]
+
+  @@fulltext([name])
+}
+
+model Cuisine {
+  id                String             @id @default(uuid())
+  name              String             @unique
+
+  recipes           Recipe[]
+
+  @@fulltext([name])
+}
+
+model MeasureUnit {
+  id                String             @id @default(uuid())
+  name              String             @unique
+
+  ingredients       RecipeIngredient[]
+
+  @@fulltext([name])
+}

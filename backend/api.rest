@@ -1,0 +1,268 @@
+GET http://localhost:5000 HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/categories HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/categories/search?searchTerm=sa HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/cuisines HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/cuisines/search?searchTerm=ish HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/measure-units HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/measure-units/search?searchTerm=oz
+
+###
+
+GET http://localhost:5000/api/dietary-restrictions HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/dietary-restrictions/search?searchTerm=gluten HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/difficulty-levels HTTP/1.1
+
+###
+
+POST http://localhost:5000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Jan Kowalski",
+    "email": "jan@kowalski.com",
+    "password": "P@ssw0rd"
+}
+
+###
+
+POST http://localhost:5000/api/auth HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "jan@kowalski.com",
+    "password": "P@ssw0rd"
+}
+
+###
+
+GET http://localhost:5000/api/auth/logout HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/users/email HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/users HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/users/all HTTP/1.1
+
+###
+
+PUT http://localhost:5000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "jan@kowalski.com"
+}
+
+###
+
+PATCH http://localhost:5000/api/users/password HTTP/1.1
+Content-Type: application/json
+
+{
+    "currentPassword": "P@ssw0rd",
+    "newPassword":"P@ssw0rdd",
+    "newPassword2": "P@ssw0rdd"
+}
+
+###
+
+POST http://localhost:5000/api/users/ratings
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "score": 5
+}
+
+###
+
+PUT http://localhost:5000/api/users/ratings/
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "score": 4
+}
+
+###
+
+GET http://localhost:5000/api/recipes/ratings/4c6ee512-97c8-412e-8c66-887f09a6b8df/average
+
+###
+
+GET http://localhost:5000/api/users/comments
+
+###
+
+POST http://localhost:5000/api/users/comments
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "content": "Nice recipe"
+}
+
+###
+
+PUT http://localhost:5000/api/users/comments/60ed3749-fe7c-4251-b85d-7e972f8c6c09
+Content-Type: application/json
+
+{
+  "content": "Nice recipeeeeee"
+}
+
+###
+
+DELETE http://localhost:5000/api/users/comments/60ed3749-fe7c-4251-b85d-7e972f8c6c09
+
+###
+
+POST http://localhost:5000/api/users/favourites
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df"
+}
+
+###
+
+GET http://localhost:5000/api/users/favourites
+
+###
+
+DELETE http://localhost:5000/api/users/favourites/4c6ee512-97c8-412e-8c66-887f09a6b8df
+
+###
+
+GET http://localhost:5000/api/ingredients HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/ingredients/search?searchTerm=eg HTTP/1.1
+
+###
+
+POST http://localhost:5000/api/recipes HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Spaghetti Carbonara",
+  "isPrivate": true,
+  "categoryId": "a3a7789d-02bd-4e8b-8ce1-18250b528950",
+  "photo": "https://res.cloudinary.com/dvaw6nzfv/image/upload/v1753622227/carbonara_fgzhdz.jpg",
+  "servingsNumber": 2,
+  "preparationTime": 20,
+  "cuisineId": "13012e06-ddb7-4c07-a31d-081a3e6ae1be",
+  "difficultyLevel": "EASY",
+  "ingredients": [
+    {
+      "name": "spaghetti",
+      "amount": 200,
+      "measureUnitId": "082d88f4-18d4-49a2-8748-b80ab04d4ddf"
+    },
+    {
+      "name": "pancetta",
+      "amount": 100,
+      "measureUnitId": "082d88f4-18d4-49a2-8748-b80ab04d4ddf"
+    },
+    {
+      "name": "eggs",
+      "amount": 2
+    },
+    {
+      "name": "parmesan cheese",
+      "amount": 50,
+      "measureUnitId": "082d88f4-18d4-49a2-8748-b80ab04d4ddf"
+    },
+    {
+      "name": "black pepper",
+      "amount": 1,
+      "measureUnitId": "d51e51e5-2ed6-4b1f-a012-7a89f2c86f69"
+    }
+  ],
+  "dietaryRestrictionIds": [],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "name": "Prepare ingredients",
+      "bullets": [
+        "Boil salted water for pasta",
+        "Dice pancetta into small cubes",
+        "Grate parmesan cheese",
+        "Beat eggs in a bowl with cheese and pepper"
+      ]
+    },
+    {
+      "stepNumber": 2,
+      "name": "Cook pasta and pancetta",
+      "bullets": [
+        "Cook spaghetti according to package instructions",
+        "In a large pan, cook pancetta until crispy",
+        "Reserve 1 cup of pasta water before draining",
+        "Add drained pasta to the pan with pancetta"
+      ]
+    },
+    {
+      "stepNumber": 3,
+      "name": "Create the sauce",
+      "bullets": [
+        "Remove pan from heat",
+        "Quickly add egg mixture to the hot pasta",
+        "Toss vigorously to create creamy sauce",
+        "Add pasta water if needed to achieve desired consistency",
+        "Serve immediately with extra parmesan"
+      ]
+    }
+  ]
+}
+
+### 
+
+GET http://localhost:5000/api/users/recipes HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/recipes
+
+###
+
+GET http://localhost:5000/api/recipes/of-the-day
+
+###
+
+PUT http://localhost:5000/api/recipes/toggle-privacy/4c6ee512-97c8-412e-8c66-887f09a6b8df
+
+###
+
+GET http://localhost:5000/api/recipes/filtered?searchTerm=carbonara&categoryIds=a3a7789d-02bd-4e8b-8ce1-18250b528950&difficultyLevel=EASY
+
+###
