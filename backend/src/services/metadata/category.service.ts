@@ -1,9 +1,26 @@
-import { PrismaClient } from "@prisma/client";
+import { Category, PrismaClient } from "@prisma/client";
+import { SearchService } from "../search.service";
 
 export class CategoryService {
-	constructor(private prisma: PrismaClient) {}
+	private searchService: SearchService;
+
+	constructor(private prisma: PrismaClient) {
+		this.searchService = new SearchService(this.prisma);
+	}
 
 	async getAllCategories() {
 		return this.prisma.category.findMany();
+	}
+
+	async searchCategories(
+		searchTerm: string,
+		limit?: string
+	): Promise<Category[]> {
+		return this.searchService.searchEntities(
+			"category",
+			"name",
+			searchTerm,
+			limit
+		);
 	}
 }

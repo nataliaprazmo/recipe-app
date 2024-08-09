@@ -6,11 +6,23 @@ GET http://localhost:5000/api/categories HTTP/1.1
 
 ###
 
+GET http://localhost:5000/api/categories/search?searchTerm=sa HTTP/1.1
+
+###
+
 GET http://localhost:5000/api/cuisines HTTP/1.1
 
 ###
 
+GET http://localhost:5000/api/cuisines/search?searchTerm=ish HTTP/1.1
+
+###
+
 GET http://localhost:5000/api/measure-units HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/measure-units/search?searchTerm=oz
 
 ###
 

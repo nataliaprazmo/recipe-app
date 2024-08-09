@@ -3,6 +3,7 @@ import { BasicRecipe, RecipeFilterInput } from "../../types/recipe.types";
 
 type RecipeFindManyArgs = Prisma.RecipeFindManyArgs;
 type RecipeWhereInput = Prisma.RecipeWhereInput;
+type RecipeOrderByWithRelationInput = Prisma.RecipeOrderByWithRelationInput;
 
 export class RecipeFiltering {
 	private readonly defaultIncludes = {
@@ -32,7 +33,7 @@ export class RecipeFiltering {
 	private buildQuery(
 		filters: RecipeFilterInput,
 		searcherId?: string
-	): Prisma.RecipeFindManyArgs & {
+	): RecipeFindManyArgs & {
 		include: {
 			category: true;
 			ratings: true;
@@ -61,7 +62,7 @@ export class RecipeFiltering {
 			...(searcherId ? [{ ownerId: searcherId }] : []),
 		];
 
-		const andConditions: Prisma.RecipeWhereInput[] = [];
+		const andConditions: RecipeWhereInput[] = [];
 
 		if (searchTerm) {
 			andConditions.push({
@@ -150,7 +151,7 @@ export class RecipeFiltering {
 		sortBy: string,
 		sortOrder: "asc" | "desc",
 		searchTerm?: string
-	): Prisma.RecipeOrderByWithRelationInput {
+	): RecipeOrderByWithRelationInput {
 		if (searchTerm && sortBy === "relevance") {
 			return {
 				_relevance: {

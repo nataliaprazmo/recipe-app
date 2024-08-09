@@ -19,6 +19,14 @@ export default async function metadataRoutes(fastify: FastifyInstance) {
 	);
 
 	fastify.get<{
+		Querystring: { searchTerm: string; limit?: string };
+		Reply: { message: string; results: DietaryRestriction[] };
+	}>(
+		"/dietary-restrictions/search",
+		metadataController.searchDietaryRestrictions.bind(metadataController)
+	);
+
+	fastify.get<{
 		Reply: { message: string; categories: Category[] } | { error: string };
 	}>(
 		"/categories",
@@ -26,14 +34,38 @@ export default async function metadataRoutes(fastify: FastifyInstance) {
 	);
 
 	fastify.get<{
+		Querystring: { searchTerm: string; limit?: string };
+		Reply: { message: string; results: Category[] };
+	}>(
+		"/categories/search",
+		metadataController.searchCategories.bind(metadataController)
+	);
+
+	fastify.get<{
 		Reply: { message: string; cuisines: Cuisine[] };
 	}>("/cuisines", metadataController.getCuisines.bind(metadataController));
+
+	fastify.get<{
+		Querystring: { searchTerm: string; limit?: string };
+		Reply: { message: string; results: Cuisine[] };
+	}>(
+		"/cuisines/search",
+		metadataController.searchCuisines.bind(metadataController)
+	);
 
 	fastify.get<{
 		Reply: { message: string; measureUnits: MeasureUnit[] };
 	}>(
 		"/measure-units",
 		metadataController.getMeasureUnits.bind(metadataController)
+	);
+
+	fastify.get<{
+		Querystring: { searchTerm: string; limit?: string };
+		Reply: { message: string; results: MeasureUnit[] };
+	}>(
+		"/measure-units/search",
+		metadataController.searchMeasureUnits.bind(metadataController)
 	);
 
 	fastify.get<{
