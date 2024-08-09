@@ -1,10 +1,24 @@
 import Fastify from "fastify";
 import prisma from "./plugins/prisma";
+import metadataRoutes from "./routes/metadata.route";
+import userRoutes from "./routes/user.route";
+import { recipeRoutes } from "./routes/recipe.route";
+import { ingredientRoutes } from "./routes/ingredient.route";
+import auth from "./plugins/auth";
+import authRoutes from "./routes/auth.route";
 
 const fastify = Fastify();
 
 // register plugins
 fastify.register(prisma);
+fastify.register(auth);
+
+// register routes
+fastify.register(authRoutes, { prefix: "/api/auth" });
+fastify.register(metadataRoutes, { prefix: "/api" });
+fastify.register(userRoutes, { prefix: "/api/users" });
+fastify.register(ingredientRoutes, { prefix: "/api/ingredients" });
+fastify.register(recipeRoutes, { prefix: "/api/recipes" });
 
 const port = parseInt(process.env.PORT || "5000");
 const host = process.env.HOST || "127.0.0.1";
@@ -24,6 +38,7 @@ listeners.forEach((signal) => {
 const start = async () => {
 	try {
 		await fastify.listen({ port, host });
+		console.log(fastify.printRoutes());
 	} catch (err) {
 		fastify.log.error(err);
 		process.exit(1);
