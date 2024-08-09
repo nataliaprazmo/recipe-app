@@ -48,7 +48,7 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 		Params: { id: string };
 		Reply: BasicRecipe;
 	}>(
-		"/toggle-privacy/:recipeId",
+		"/toggle-privacy/:id",
 		{ preHandler: [fastify.auth] },
 		recipeController.toggleRecipePrivacy.bind(recipeController)
 	);

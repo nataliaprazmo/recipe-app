@@ -26,18 +26,22 @@ class FavouriteController {
 	}
 
 	async addFavourite(
-		request: FastifyRequest<{ Body: FavouriteRecipe }>,
+		request: FastifyRequest<{ Body: { recipeId: string } }>,
 		reply: FastifyReply
 	): Promise<void> {
 		try {
-			const newFavourite = await this.favouriteService.addFavourite(
-				request.body
-			);
+			const recipeId = request.body.recipeId;
+			const ownerId = request.user.id;
+			const newFavourite = await this.favouriteService.addFavourite({
+				ownerId,
+				recipeId,
+			});
 			await reply.status(201).send({
 				message: "Favourite added successfully",
 				newFavourite,
 			});
 		} catch (error) {
+			console.log(error);
 			request.log.error("Error adding favourite recipes", error);
 			await reply
 				.status(400)

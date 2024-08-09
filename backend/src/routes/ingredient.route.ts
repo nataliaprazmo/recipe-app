@@ -61,7 +61,7 @@ export async function ingredientRoutes(fastify: FastifyInstance) {
 	);
 
 	fastify.get<{
-		Querystring: { q: string; limit?: number };
+		Querystring: { searchTerm: string; limit?: number };
 		Reply: Ingredient[];
 	}>(
 		"/search",

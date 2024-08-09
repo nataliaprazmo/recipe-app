@@ -30,6 +30,10 @@ GET http://localhost:5000/api/dietary-restrictions HTTP/1.1
 
 ###
 
+GET http://localhost:5000/api/dietary-restrictions/search?searchTerm=gluten HTTP/1.1
+
+###
+
 GET http://localhost:5000/api/difficulty-levels HTTP/1.1
 
 ###
@@ -71,7 +75,99 @@ GET http://localhost:5000/api/users/all HTTP/1.1
 
 ###
 
+PUT http://localhost:5000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "jan@kowalski.com"
+}
+
+###
+
+PATCH http://localhost:5000/api/users/password HTTP/1.1
+Content-Type: application/json
+
+{
+    "currentPassword": "P@ssw0rd",
+    "newPassword":"P@ssw0rdd",
+    "newPassword2": "P@ssw0rdd"
+}
+
+###
+
+POST http://localhost:5000/api/users/ratings
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "score": 5
+}
+
+###
+
+PUT http://localhost:5000/api/users/ratings/
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "score": 4
+}
+
+###
+
+GET http://localhost:5000/api/recipes/ratings/4c6ee512-97c8-412e-8c66-887f09a6b8df/average
+
+###
+
+GET http://localhost:5000/api/users/comments
+
+###
+
+POST http://localhost:5000/api/users/comments
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df",
+  "content": "Nice recipe"
+}
+
+###
+
+PUT http://localhost:5000/api/users/comments/60ed3749-fe7c-4251-b85d-7e972f8c6c09
+Content-Type: application/json
+
+{
+  "content": "Nice recipeeeeee"
+}
+
+###
+
+DELETE http://localhost:5000/api/users/comments/60ed3749-fe7c-4251-b85d-7e972f8c6c09
+
+###
+
+POST http://localhost:5000/api/users/favourites
+Content-Type: application/json
+
+{
+  "recipeId": "4c6ee512-97c8-412e-8c66-887f09a6b8df"
+}
+
+###
+
+GET http://localhost:5000/api/users/favourites
+
+###
+
+DELETE http://localhost:5000/api/users/favourites/4c6ee512-97c8-412e-8c66-887f09a6b8df
+
+###
+
 GET http://localhost:5000/api/ingredients HTTP/1.1
+
+###
+
+GET http://localhost:5000/api/ingredients/search?searchTerm=eg HTTP/1.1
 
 ###
 
@@ -156,6 +252,14 @@ GET http://localhost:5000/api/users/recipes HTTP/1.1
 ###
 
 GET http://localhost:5000/api/recipes
+
+###
+
+GET http://localhost:5000/api/recipes/of-the-day
+
+###
+
+PUT http://localhost:5000/api/recipes/toggle-privacy/4c6ee512-97c8-412e-8c66-887f09a6b8df
 
 ###
 

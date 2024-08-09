@@ -11,7 +11,7 @@ export async function userFavouriteRoutes(fastify: FastifyInstance) {
 		favouriteController.getFavouritesByUserId.bind(favouriteController)
 	);
 
-	fastify.post<{ Body: FavouriteRecipe; Reply: FavouriteRecipe }>(
+	fastify.post<{ Body: { recipeId: string }; Reply: FavouriteRecipe }>(
 		"/",
 		{ preHandler: [fastify.auth] },
 		favouriteController.addFavourite.bind(favouriteController)

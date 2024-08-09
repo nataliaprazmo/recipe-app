@@ -163,12 +163,12 @@ class IngredientController {
 
 	async searchIngredients(
 		request: FastifyRequest<{
-			Querystring: { q: string; limit?: number };
+			Querystring: { searchTerm: string; limit?: number };
 		}>,
 		reply: FastifyReply
 	): Promise<void> {
 		try {
-			const { q: searchTerm, limit } = request.query;
+			const { searchTerm, limit } = request.query;
 
 			if (!searchTerm || typeof searchTerm !== "string") {
 				await reply
