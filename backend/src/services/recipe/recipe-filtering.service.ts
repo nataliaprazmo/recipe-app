@@ -1,16 +1,11 @@
 import { DifficultyLevel, Prisma, PrismaClient } from "@prisma/client";
-import { RecipeFilterInput } from "../../types/recipe.types";
+import { BasicRecipe, RecipeFilterInput } from "../../types/recipe.types";
 
 type RecipeFindManyArgs = Prisma.RecipeFindManyArgs;
 type RecipeWhereInput = Prisma.RecipeWhereInput;
 
 export class RecipeFiltering {
 	private readonly defaultIncludes = {
-		recipeSteps: {
-			include: {
-				stepBullets: true,
-			},
-		},
 		category: true,
 		ratings: true,
 	} as const;
@@ -20,15 +15,29 @@ export class RecipeFiltering {
 	async getFilteredAndSortedRecipes(
 		filters: RecipeFilterInput,
 		searcherId?: string
-	) {
+	): Promise<BasicRecipe[]> {
 		const query = this.buildQuery(filters, searcherId);
-		return this.prisma.recipe.findMany(query);
+		const recipes = await this.prisma.recipe.findMany(query);
+		return recipes.map((recipe) => ({
+			id: recipe.id,
+			name: recipe.name,
+			photo: recipe.photo,
+			preparationTime: recipe.preparationTime,
+			servingsNumber: recipe.servingsNumber,
+			category: recipe.category,
+			ratings: recipe.ratings,
+		}));
 	}
 
 	private buildQuery(
 		filters: RecipeFilterInput,
 		searcherId?: string
-	): RecipeFindManyArgs {
+	): Prisma.RecipeFindManyArgs & {
+		include: {
+			category: true;
+			ratings: true;
+		};
+	} {
 		const { sortBy = "createdAt", sortOrder = "asc", searchTerm } = filters;
 
 		const whereClause = this.buildWhereClause(filters, searcherId);
@@ -220,22 +229,34 @@ export class RecipeFiltering {
 
 	private addCategoryFilter(
 		conditions: RecipeWhereInput,
-		categoryIds?: string[]
+		categoryIds?: string[] | string
 	): void {
-		if (!this.isNonEmptyArray(categoryIds)) return;
+		if (!categoryIds) return;
 
-		conditions.categoryId = { in: categoryIds };
+		const idsArray = Array.isArray(categoryIds)
+			? categoryIds
+			: [categoryIds];
+
+		if (idsArray.length === 0) return;
+
+		conditions.categoryId = { in: idsArray };
 	}
 
 	private addDietaryRestrictionFilter(
 		conditions: RecipeWhereInput,
-		dietaryRestrictionIds?: string[]
+		dietaryRestrictionIds?: string[] | string
 	): void {
-		if (!this.isNonEmptyArray(dietaryRestrictionIds)) return;
+		if (!dietaryRestrictionIds) return;
+
+		const idsArray = Array.isArray(dietaryRestrictionIds)
+			? dietaryRestrictionIds
+			: [dietaryRestrictionIds];
+
+		if (idsArray.length === 0) return;
 
 		conditions.dietaryRestrictions = {
 			some: {
-				restrictionId: { in: dietaryRestrictionIds },
+				restrictionId: { in: idsArray },
 			},
 		};
 	}

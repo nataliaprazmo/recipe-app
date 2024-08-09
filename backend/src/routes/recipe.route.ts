@@ -71,7 +71,7 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 		recipeController.deleteRecipe.bind(recipeController)
 	);
 
-	fastify.get<{ Params: RecipeFilterInput; Reply: Recipe[] }>(
+	fastify.get<{ Querystring: RecipeFilterInput; Reply: Recipe[] }>(
 		"/filtered",
 		{ preHandler: [fastify.auth] },
 		recipeController.getFilteredAndSortedRecipes.bind(recipeController)

@@ -50,8 +50,8 @@ export type RecipeFilterInput = {
 	maxServingNumber?: number;
 	difficultyLevel?: DifficultyLevel;
 	cuisineId?: string;
-	categoryIds?: string[];
-	dietaryRestrictionIds?: string[];
+	categoryIds?: string[] | string;
+	dietaryRestrictionIds?: string[] | string;
 	sortBy?: "createdAt" | "averageRating" | "preparationTime" | "relevance";
 	sortOrder?: "asc" | "desc";
 };

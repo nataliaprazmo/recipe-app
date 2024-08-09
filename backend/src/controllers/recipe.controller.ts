@@ -222,12 +222,12 @@ class RecipeController {
 	}
 
 	async getFilteredAndSortedRecipes(
-		request: FastifyRequest<{ Params: RecipeFilterInput }>,
+		request: FastifyRequest<{ Querystring: RecipeFilterInput }>,
 		reply: FastifyReply
 	): Promise<void> {
 		try {
 			const userId = request.user.id;
-			const filters = request.params;
+			const filters = request.query;
 			const filteredRecipes =
 				await this.recipeService.getFilteredAndSortedRecipes(
 					filters,
