@@ -1,5 +1,6 @@
 import {
 	Category,
+	DifficultyLevel,
 	Ingredient,
 	Rating,
 	Recipe,
@@ -39,4 +40,18 @@ export type BasicRecipe = Pick<
 > & {
 	category: Category | null;
 	ratings: Rating[];
+};
+
+export type RecipeFilterInput = {
+	searchTerm?: string;
+	ingredientNames?: string[];
+	maxPreparationTime?: number;
+	minServingNumber?: number;
+	maxServingNumber?: number;
+	difficultyLevel?: DifficultyLevel;
+	cuisineId?: string;
+	categoryIds?: string[] | string;
+	dietaryRestrictionIds?: string[] | string;
+	sortBy?: "createdAt" | "averageRating" | "preparationTime" | "relevance";
+	sortOrder?: "asc" | "desc";
 };

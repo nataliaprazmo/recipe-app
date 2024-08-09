@@ -1,5 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateRecipeInput, UpdateRecipeInput } from "../types/recipe.types";
+import {
+	CreateRecipeInput,
+	RecipeFilterInput,
+	UpdateRecipeInput,
+} from "../types/recipe.types";
 import { RecipeService } from "../services/recipe/recipe.service";
 import { PrismaClient } from "@prisma/client";
 
@@ -214,6 +218,27 @@ class RecipeController {
 					.code(500)
 					.send({ error: "Failed to delete recipe" });
 			}
+		}
+	}
+
+	async getFilteredAndSortedRecipes(
+		request: FastifyRequest<{ Querystring: RecipeFilterInput }>,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const userId = request.user.id;
+			const filters = request.query;
+			const filteredRecipes =
+				await this.recipeService.getFilteredAndSortedRecipes(
+					filters,
+					userId
+				);
+			await reply
+				.status(200)
+				.send({ message: "Fetched filtered recipes", filteredRecipes });
+		} catch (error) {
+			request.log.error("Error fetching recipes:", error);
+			await reply.code(500).send({ error: "Error fetching recipes" });
 		}
 	}
 }
