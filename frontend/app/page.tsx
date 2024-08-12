@@ -1,10 +1,9 @@
-import Image from "next/image";
+import HomePage from "@/components/home/HomePage";
 
 export default function Home() {
 	return (
-		<main className="flex flex-col gap-4 p-6">
-			<h1>Test H1</h1>
-			<p>Test paragraph p lorem ipsum dolor</p>
+		<main className="relative">
+			<HomePage />
 		</main>
 	);
 }

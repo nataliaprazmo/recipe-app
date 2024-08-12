@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { lato, raleway } from "./ui/fonts";
+import "@/styles/globals.css";
+import { lato, raleway } from "@/styles/fonts";
 
 export const metadata: Metadata = {
 	title: "Foodi App",
