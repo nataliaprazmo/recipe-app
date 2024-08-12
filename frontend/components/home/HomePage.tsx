@@ -1,6 +1,7 @@
 import Button from "../Button";
 import NavContainer from "../nav/NavContainer";
 import Hero from "./Hero";
+import TwoColumnContent from "./TwoColumnContent";
 
 export default function HomePage() {
 	return (
@@ -14,6 +15,28 @@ export default function HomePage() {
 				/>
 			</NavContainer>{" "}
 			<Hero />
+			<TwoColumnContent
+				id="content1"
+				textLeft={true}
+				title="Find, Add and Review Your Favourite Recipes"
+				text="Dive into a vast collection of recipes from around the world. Whether you’re looking for a quick weeknight dinner or a gourmet meal, our search feature helps you find the perfect recipe. Easily add new recipes to your personal collection and keep track of all your culinary discoveries."
+				buttonText="Discover recipes"
+				buttonLink="/recipes"
+				imageSrc="/images/content-1.webp"
+				imageAlt="Content 1"
+				imagePriority={true}
+			/>
+			<TwoColumnContent
+				id="content2"
+				textLeft={false}
+				text="Become part of a vibrant community of food enthusiasts. Share your own culinary creations and explore recipes shared by others. Engage with other members through comments, tips, and reviews. By sharing your recipes, you contribute to a growing library of delicious options for everyone to enjoy."
+				title="Join Our 10,000+ Recipe Sharing Community"
+				buttonText="Join community"
+				buttonLink="/signup"
+				imageSrc="/images/content-2.webp"
+				imageAlt="Content 2"
+				imagePriority={true}
+			/>
 		</>
 	);
 }
