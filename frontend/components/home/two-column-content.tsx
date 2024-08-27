@@ -1,7 +1,7 @@
 import { memo } from "react";
-import TwoColumnContainer from "./TwoColumnContainer";
-import ContentText from "./ContentText";
-import ContentImage from "./ContentImage";
+import TwoColumnContainer from "./two-column-container";
+import ContentText from "./content-text";
+import ContentImage from "./content-image";
 
 interface TwoColumnContentProps {
 	id?: string;

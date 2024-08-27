@@ -1,7 +1,7 @@
-import Button from "../Button";
-import NavContainer from "../nav/NavContainer";
-import Hero from "./Hero";
-import TwoColumnContent from "./TwoColumnContent";
+import Button from "../ui/button";
+import NavContainer from "../nav/nav-container";
+import TwoColumnContent from "./two-column-content";
+import Hero from "./hero";
 
 export default function HomePage() {
 	return (

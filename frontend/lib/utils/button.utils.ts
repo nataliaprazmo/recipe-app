@@ -1,5 +1,9 @@
 import { MouseEvent } from "react";
-import { ButtonVariant, ButtonColor, ButtonSize } from "@/types/button.types";
+import {
+	ButtonVariant,
+	ButtonColor,
+	ButtonSize,
+} from "@/lib/types/button.types";
 import {
 	buttonStyles,
 	baseClasses,

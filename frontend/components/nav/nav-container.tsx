@@ -1,7 +1,7 @@
 "use client";
 
-import { useScrollEffect } from "@/hooks/useScrollEffect";
-import Logo from "../Logo";
+import { useScrollEffect } from "@/hooks/use-scroll-effect";
+import Logo from "../ui/logo";
 
 export default function NavContainer({
 	children,

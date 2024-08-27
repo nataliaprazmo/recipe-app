@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { memo, Suspense } from "react";
-import ImageSkeleton from "../skeletons/ImageSkeleton";
+import ImageSkeleton from "../skeletons/image-skeleton";
 
 interface ContentImageProps {
 	imageSrc: string;

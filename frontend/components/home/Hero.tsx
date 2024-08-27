@@ -1,6 +1,6 @@
 import { HiChevronDown } from "react-icons/hi2";
-import Button from "../Button";
-import SearchBar from "../SearchBar";
+import Button from "../ui/button";
+import SearchBar from "../ui/search-bar";
 
 export default function Hero() {
 	return (

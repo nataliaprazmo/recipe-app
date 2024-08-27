@@ -2,14 +2,14 @@
 
 import React, { forwardRef } from "react";
 import Link from "next/link";
-import { ButtonProps } from "@/types/button.types";
+import { ButtonProps } from "@/lib/types/button.types";
 import {
 	generateButtonClasses,
 	handleSmoothScroll,
 	shouldUseSmoothScroll,
 	validateButtonProps,
-} from "@/utils/button.utils";
-import LoadingSpinner from "./LoadingSpinner";
+} from "@/lib/utils/button.utils";
+import LoadingSpinner from "./loading-spinner";
 
 const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
 	(props, ref) => {

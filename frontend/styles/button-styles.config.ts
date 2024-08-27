@@ -1,4 +1,4 @@
-import { ButtonStyleConfig } from "@/types/button.types";
+import { ButtonStyleConfig } from "@/lib/types/button.types";
 
 export const buttonStyles: ButtonStyleConfig = {
 	variant: {
