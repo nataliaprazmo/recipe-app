@@ -1,4 +1,5 @@
 import { ENDPOINTS } from "@/lib/api/endpoints";
+import { DietaryRestriction } from "@/lib/types/data.types";
 import {
 	getFromEndpoint,
 	searchFromEndpoint,
@@ -6,7 +7,7 @@ import {
 
 export async function fetchDietaryRestrictions() {
 	try {
-		return await getFromEndpoint(
+		return await getFromEndpoint<DietaryRestriction[]>(
 			ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.BASE
 		);
 	} catch (error) {
@@ -17,7 +18,7 @@ export async function fetchDietaryRestrictions() {
 
 export async function searchDietaryRestrictions(searchTerm: string) {
 	try {
-		return await searchFromEndpoint(
+		return await searchFromEndpoint<DietaryRestriction[]>(
 			ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.SEARCH,
 			searchTerm
 		);

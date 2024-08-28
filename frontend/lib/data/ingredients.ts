@@ -3,10 +3,11 @@ import {
 	searchFromEndpoint,
 } from "@/lib/utils/fetching.utils";
 import { ENDPOINTS } from "../api/endpoints";
+import { Ingredient } from "../types/data.types";
 
 export async function fetchIngredients() {
 	try {
-		return await getFromEndpoint(ENDPOINTS.INGREDIENTS.BASE);
+		return await getFromEndpoint<Ingredient[]>(ENDPOINTS.INGREDIENTS.BASE);
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch ingredients.");
@@ -15,7 +16,7 @@ export async function fetchIngredients() {
 
 export async function searchIngredients(searchTerm: string) {
 	try {
-		return await searchFromEndpoint(
+		return await searchFromEndpoint<Ingredient[]>(
 			ENDPOINTS.INGREDIENTS.SEARCH,
 			searchTerm
 		);

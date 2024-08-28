@@ -1,4 +1,5 @@
 import { ENDPOINTS } from "@/lib/api/endpoints";
+import { Category } from "@/lib/types/data.types";
 import {
 	getFromEndpoint,
 	searchFromEndpoint,
@@ -6,7 +7,9 @@ import {
 
 export async function fetchCategories() {
 	try {
-		return await getFromEndpoint(ENDPOINTS.METADATA.CATEGORIES.BASE);
+		return await getFromEndpoint<Category[]>(
+			ENDPOINTS.METADATA.CATEGORIES.BASE
+		);
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch categories.");
@@ -15,7 +18,7 @@ export async function fetchCategories() {
 
 export async function searchCategories(searchTerm: string) {
 	try {
-		return await searchFromEndpoint(
+		return await searchFromEndpoint<Category[]>(
 			ENDPOINTS.METADATA.CATEGORIES.SEARCH,
 			searchTerm
 		);
