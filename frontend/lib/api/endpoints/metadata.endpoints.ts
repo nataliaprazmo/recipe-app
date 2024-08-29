@@ -1,23 +1,23 @@
 export const METADATA_ENDPOINTS = {
 	CATEGORIES: {
-		BASE: "/api/categories",
+		BASE: "/categories",
 		SEARCH: (searchTerm: string) =>
-			`/api/categories/search?searchTerm=${searchTerm}`,
+			`/categories/search?searchTerm=${searchTerm}`,
 	},
 	CUISINES: {
-		BASE: "/api/cuisines",
+		BASE: "/cuisines",
 		SEARCH: (searchTerm: string) =>
-			`/api/cuisines/search?searchTerm=${searchTerm}`,
+			`/cuisines/search?searchTerm=${searchTerm}`,
 	},
 	DIETARY_RESTRICTIONS: {
-		BASE: "/api/dietary-restrictions",
+		BASE: "/dietary-restrictions",
 		SEARCH: (searchTerm: string) =>
-			`/api/dietary-restrictions/search?searchTerm=${searchTerm}`,
+			`/dietary-restrictions/search?searchTerm=${searchTerm}`,
 	},
-	DIFFICULTY_LEVELS: "/api/difficulty-levels",
+	DIFFICULTY_LEVELS: "/difficulty-levels",
 	MEASURE_UNITS: {
-		BASE: "/api/measure-units",
+		BASE: "/measure-units",
 		SEARCH: (searchTerm: string) =>
-			`/api/measure-units/search?searchTerm=${searchTerm}`,
+			`/measure-units/search?searchTerm=${searchTerm}`,
 	},
 } as const;

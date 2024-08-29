@@ -1,22 +1,22 @@
 export const USERS_ENDPOINTS = {
-	BASE: "/api/users",
-	ALL: "/api/users/all",
-	BY_EMAIL: "/api/users/email",
-	PASSWORD: "/api/users/password",
+	BASE: "/users",
+	ALL: "/users/all",
+	BY_EMAIL: "/users/email",
+	PASSWORD: "/users/password",
 	RECIPES: {
-		BASE: "/api/users/recipes",
-		BY_USER: (userId: string) => `/api/users/recipes/${userId}`,
+		BASE: "/users/recipes",
+		BY_USER: (userId: string) => `/users/recipes/${userId}`,
 	},
 	RATINGS: {
-		BASE: "/api/users/ratings",
-		BY_RECIPE: (recipeId: string) => `/api/users/ratings/${recipeId}`,
+		BASE: "/users/ratings",
+		BY_RECIPE: (recipeId: string) => `/users/ratings/${recipeId}`,
 	},
 	COMMENTS: {
-		BASE: "/api/users/comments",
-		BY_ID: (commentId: string) => `/api/users/comments/${commentId}`,
+		BASE: "/users/comments",
+		BY_ID: (commentId: string) => `/users/comments/${commentId}`,
 	},
 	FAVORITES: {
-		BASE: "/api/users/favorites",
-		BY_RECIPE: (recipeId: string) => `/api/users/favorites/${recipeId}`,
+		BASE: "/users/favorites",
+		BY_RECIPE: (recipeId: string) => `/users/favorites/${recipeId}`,
 	},
 } as const;

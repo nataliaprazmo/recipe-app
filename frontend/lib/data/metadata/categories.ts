@@ -7,9 +7,12 @@ import {
 
 export async function fetchCategories() {
 	try {
-		return await getFromEndpoint<Category[]>(
-			ENDPOINTS.METADATA.CATEGORIES.BASE
-		);
+		const data = await getFromEndpoint<{
+			message: string;
+			categories: Category[];
+		}>(ENDPOINTS.METADATA.CATEGORIES.BASE);
+
+		return data.categories;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch categories.");
@@ -18,10 +21,12 @@ export async function fetchCategories() {
 
 export async function searchCategories(searchTerm: string) {
 	try {
-		return await searchFromEndpoint<Category[]>(
-			ENDPOINTS.METADATA.CATEGORIES.SEARCH,
-			searchTerm
-		);
+		const data = await searchFromEndpoint<{
+			message: string;
+			results: Category[];
+			meta: { limit: number };
+		}>(ENDPOINTS.METADATA.CATEGORIES.SEARCH, searchTerm);
+		return data.results;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch categories.");

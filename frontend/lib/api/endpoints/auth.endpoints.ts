@@ -1,4 +1,4 @@
 export const AUTH_ENDPOINTS = {
-	LOGIN: "/api/auth",
-	LOGOUT: "/api/auth/logout",
+	LOGIN: "/auth",
+	LOGOUT: "/auth/logout",
 } as const;

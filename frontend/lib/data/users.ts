@@ -7,7 +7,10 @@ import { BasicRecipe, Rating, User } from "../types/data.types";
 
 export async function fetchUser() {
 	try {
-		return await getFromEndpoint<User>(ENDPOINTS.USERS.BASE);
+		const data = await getFromEndpoint<{ message: string; user: User }>(
+			ENDPOINTS.USERS.BASE
+		);
+		return data.user;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user.");
@@ -16,7 +19,10 @@ export async function fetchUser() {
 
 export async function fetchUsers() {
 	try {
-		return await getFromEndpoint<User[]>(ENDPOINTS.USERS.ALL);
+		const data = await getFromEndpoint<{ message: string; users: User[] }>(
+			ENDPOINTS.USERS.ALL
+		);
+		return data.users;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch users.");
@@ -25,9 +31,11 @@ export async function fetchUsers() {
 
 export async function fetchCurrentUserRecipes() {
 	try {
-		return await getFromEndpoint<BasicRecipe[]>(
-			ENDPOINTS.USERS.RECIPES.BASE
-		);
+		const data = await getFromEndpoint<{
+			message: string;
+			recipes: BasicRecipe[];
+		}>(ENDPOINTS.USERS.RECIPES.BASE);
+		return data.recipes;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user's recipes.");
@@ -36,10 +44,11 @@ export async function fetchCurrentUserRecipes() {
 
 export async function fetchUserRecipes(userId: string) {
 	try {
-		return await getFromEndpointById<BasicRecipe[]>(
-			ENDPOINTS.USERS.RECIPES.BY_USER,
-			userId
-		);
+		const data = await getFromEndpointById<{
+			message: string;
+			recipes: BasicRecipe[];
+		}>(ENDPOINTS.USERS.RECIPES.BY_USER, userId);
+		return data.recipes;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user's recipes.");
@@ -48,10 +57,11 @@ export async function fetchUserRecipes(userId: string) {
 
 export async function fetchUserRatingForRecipe(recipeId: string) {
 	try {
-		return await getFromEndpointById<Rating>(
-			ENDPOINTS.USERS.RATINGS.BY_RECIPE,
-			recipeId
-		);
+		const data = await getFromEndpointById<{
+			message: string;
+			rating: Rating;
+		}>(ENDPOINTS.USERS.RATINGS.BY_RECIPE, recipeId);
+		return data.rating;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user's recipe rating.");
@@ -60,7 +70,11 @@ export async function fetchUserRatingForRecipe(recipeId: string) {
 
 export async function fetchUserComments() {
 	try {
-		return await getFromEndpoint<Comment[]>(ENDPOINTS.USERS.COMMENTS.BASE);
+		const data = await getFromEndpoint<{
+			message: string;
+			comments: Comment[];
+		}>(ENDPOINTS.USERS.COMMENTS.BASE);
+		return data.comments;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user's comments.");
@@ -69,9 +83,11 @@ export async function fetchUserComments() {
 
 export async function fetchUserFavourites() {
 	try {
-		return await getFromEndpoint<BasicRecipe[]>(
-			ENDPOINTS.USERS.FAVORITES.BASE
-		);
+		const data = await getFromEndpoint<{
+			message: string;
+			favourites: BasicRecipe[];
+		}>(ENDPOINTS.USERS.FAVORITES.BASE);
+		return data.favourites;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch user's favourited recipes.");

@@ -7,9 +7,11 @@ import {
 
 export async function fetchDietaryRestrictions() {
 	try {
-		return await getFromEndpoint<DietaryRestriction[]>(
-			ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.BASE
-		);
+		const data = await getFromEndpoint<{
+			message: string;
+			dietaryRestrictions: DietaryRestriction[];
+		}>(ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.BASE);
+		return data.dietaryRestrictions;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch dietary restrictions.");
@@ -18,10 +20,12 @@ export async function fetchDietaryRestrictions() {
 
 export async function searchDietaryRestrictions(searchTerm: string) {
 	try {
-		return await searchFromEndpoint<DietaryRestriction[]>(
-			ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.SEARCH,
-			searchTerm
-		);
+		const data = await searchFromEndpoint<{
+			message: string;
+			results: DietaryRestriction[];
+			meta: { limit: number };
+		}>(ENDPOINTS.METADATA.DIETARY_RESTRICTIONS.SEARCH, searchTerm);
+		return data.results;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch dietary restrictions.");

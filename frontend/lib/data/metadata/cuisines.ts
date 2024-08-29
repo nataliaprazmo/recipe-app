@@ -7,9 +7,11 @@ import {
 
 export async function fetchCuisines() {
 	try {
-		return await getFromEndpoint<Cuisine[]>(
-			ENDPOINTS.METADATA.CUISINES.BASE
-		);
+		const data = await getFromEndpoint<{
+			message: string;
+			cuisines: Cuisine[];
+		}>(ENDPOINTS.METADATA.CUISINES.BASE);
+		return data.cuisines;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch cuisines.");
@@ -18,11 +20,12 @@ export async function fetchCuisines() {
 
 export async function searchCuisines(searchTerm: string) {
 	try {
-		const cuisines = await searchFromEndpoint<Cuisine[]>(
-			ENDPOINTS.METADATA.CUISINES.SEARCH,
-			searchTerm
-		);
-		return cuisines;
+		const data = await searchFromEndpoint<{
+			message: string;
+			results: Cuisine[];
+			meta: { limit: number };
+		}>(ENDPOINTS.METADATA.CUISINES.SEARCH, searchTerm);
+		return data.results;
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch cuisines.");

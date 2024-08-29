@@ -48,9 +48,7 @@ type RecipeStep = IdNamePair & {
 	stepBullets: StepBullet[];
 };
 
-export type BasicRecipe = {
-	id: string;
-	name: string;
+export type BasicRecipe = IdNamePair & {
 	photo: string;
 	preparationTime: number;
 	servingsNumber: number;
@@ -63,7 +61,7 @@ export type Recipe = BasicRecipe & {
 	isPrivate: boolean;
 	categoryId: string;
 	cuisineId: string;
-	difficultyLevel: DifficultyLevel;
+	difficultyLevel: string;
 	createdAt: Date;
 	updatedAt: Date;
 	ingredients: RecipeIngredient[];
