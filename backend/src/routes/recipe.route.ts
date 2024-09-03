@@ -33,7 +33,7 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 	);
 
 	fastify.get<{
-		Reply: { message: string; recipe: BasicRecipe } | { error: string };
+		Reply: { message: string; recipe: Recipe } | { error: string };
 	}>(
 		"/of-the-day",
 		recipeController.getRecipeOfTheDay.bind(recipeController)

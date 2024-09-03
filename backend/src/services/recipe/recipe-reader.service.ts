@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Recipe } from "@prisma/client";
 import { BasicRecipe, FullRecipe } from "../../types/recipe.types";
 import crypto from "crypto";
 
@@ -36,7 +36,7 @@ export class RecipeReader {
 		return recipes as BasicRecipe[];
 	}
 
-	async getRecipeOfTheDay(): Promise<BasicRecipe | null> {
+	async getRecipeOfTheDay(): Promise<Recipe | null> {
 		const totalCount = await this.prisma.recipe.count({
 			where: { isPrivate: false },
 		});
@@ -53,7 +53,7 @@ export class RecipeReader {
 			where: { isPrivate: false },
 			skip: index,
 			take: 1,
-			select: this.getBasicRecipeSelectOptions(),
+			include: this.getRecipeIncludeOptions(),
 		});
 
 		return recipe ?? null;

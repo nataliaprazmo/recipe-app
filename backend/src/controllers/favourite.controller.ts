@@ -67,6 +67,26 @@ class FavouriteController {
 				.send({ error: "Error removing favourite recipes" });
 		}
 	}
+
+	async getIsFavourited(
+		request: FastifyRequest<{ Params: { recipeId: string } }>,
+		reply: FastifyReply
+	): Promise<void> {
+		try {
+			const userId = request.user.id;
+			const recipeId = request.params.recipeId;
+			const isFavourited = await this.favouriteService.getIsFavourited(
+				userId,
+				recipeId
+			);
+			await reply.send(isFavourited);
+		} catch (error) {
+			request.log.error("Error checking favourite recipes", error);
+			await reply
+				.status(400)
+				.send({ error: "Error checking favourite recipes" });
+		}
+	}
 }
 
 export const createFavouriteController = (
