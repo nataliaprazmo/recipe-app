@@ -8,7 +8,7 @@ export default function CategoriesSkeleton() {
 				{Array.from({ length: 7 }).map((_, index) => (
 					<div
 						key={index}
-						className="border border-grey-200 bg-grey-200 w-80 md:w-{24rem} h-40 rounded-3xl shadow-s1 mb-4 animate-pulse"
+						className="border border-gray-200 bg-gray-200 w-80 md:w-{24rem} h-40 rounded-3xl mb-4 animate-pulse"
 					/>
 				))}
 			</div>
