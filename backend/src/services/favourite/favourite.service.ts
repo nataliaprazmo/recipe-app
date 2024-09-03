@@ -23,4 +23,15 @@ export class FavouriteService {
 			where: { ownerId_recipeId: data },
 		});
 	}
+
+	async getIsFavourited(ownerId: string, recipeId: string): Promise<boolean> {
+		return !!this.prisma.favouriteRecipe.findUnique({
+			where: {
+				ownerId_recipeId: {
+					ownerId,
+					recipeId,
+				},
+			},
+		});
+	}
 }

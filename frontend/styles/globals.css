@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+	min-width: 300px;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--font-raleway), sans-serif;
+	@apply text-p4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-lato), sans-serif;
+}
+
+h1 {
+	@apply text-h1;
+}
+
+h2 {
+	@apply text-h2;
+}
+
+h3 {
+	@apply text-h3;
+}
+
+h4 {
+	@apply text-h4;
+}

@@ -1,4 +1,9 @@
+"use strict";
+
+import dotenv from "dotenv";
+dotenv.config();
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import prisma from "./plugins/prisma";
 import metadataRoutes from "./routes/metadata.route";
 import userRoutes from "./routes/user.route";
@@ -7,7 +12,24 @@ import { ingredientRoutes } from "./routes/ingredient.route";
 import auth from "./plugins/auth";
 import authRoutes from "./routes/auth.route";
 
-const fastify = Fastify();
+const fastify = Fastify({
+	logger: {
+		transport: {
+			target: "pino-pretty",
+			options: {
+				translateTime: "HH:MM:ss Z",
+				ignore: "pid,hostname",
+			},
+		},
+	},
+});
+
+// allow frontend
+fastify.register(cors, {
+	origin: "http://localhost:3000",
+	methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+	credentials: true,
+});
 
 // register plugins
 fastify.register(prisma);

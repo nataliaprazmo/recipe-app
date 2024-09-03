@@ -25,4 +25,13 @@ export async function userFavouriteRoutes(fastify: FastifyInstance) {
 		{ preHandler: [fastify.auth] },
 		favouriteController.removeFavourite.bind(favouriteController)
 	);
+
+	fastify.get<{
+		Params: { recipeId: string };
+		Reply: boolean | { error: string };
+	}>(
+		"/:recipeId",
+		{ preHandler: [fastify.auth] },
+		favouriteController.getIsFavourited.bind(favouriteController)
+	);
 }

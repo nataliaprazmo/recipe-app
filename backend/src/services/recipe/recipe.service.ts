@@ -48,7 +48,7 @@ export class RecipeService {
 		return await this.recipeReader.getRecipesByUser(userId, includePrivate);
 	}
 
-	async getRecipeOfTheDay(): Promise<BasicRecipe | null> {
+	async getRecipeOfTheDay(): Promise<Recipe | null> {
 		return await this.recipeReader.getRecipeOfTheDay();
 	}
 
