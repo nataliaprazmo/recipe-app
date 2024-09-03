@@ -6,6 +6,7 @@ import CategoriesSection from "./categories-section";
 import { Suspense } from "react";
 import CategoriesSkeleton from "../skeletons/categories.skeleton";
 import RecipeOfTheDay from "./recipe-of-the-day";
+import Footer from "./footer";
 
 export default function HomePage() {
 	return (
@@ -45,6 +46,7 @@ export default function HomePage() {
 				imagePriority={true}
 			/>
 			<RecipeOfTheDay />
+			<Footer />
 		</>
 	);
 }
