@@ -2,6 +2,10 @@ import Button from "../ui/button";
 import NavContainer from "../nav/nav-container";
 import TwoColumnContent from "./two-column-content";
 import Hero from "./hero";
+import CategoriesSection from "./categories-section";
+import { Suspense } from "react";
+import CategoriesSkeleton from "../skeletons/categories.skeleton";
+import RecipeOfTheDay from "./recipe-of-the-day";
 
 export default function HomePage() {
 	return (
@@ -26,6 +30,9 @@ export default function HomePage() {
 				imageAlt="Content 1"
 				imagePriority={true}
 			/>
+			<Suspense fallback={<CategoriesSkeleton />}>
+				<CategoriesSection />
+			</Suspense>
 			<TwoColumnContent
 				id="content2"
 				textLeft={false}
@@ -37,6 +44,7 @@ export default function HomePage() {
 				imageAlt="Content 2"
 				imagePriority={true}
 			/>
+			<RecipeOfTheDay />
 		</>
 	);
 }
