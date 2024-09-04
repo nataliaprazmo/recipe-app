@@ -83,6 +83,7 @@ export class RecipeReader {
 			servingsNumber: true,
 			category: true,
 			ratings: true,
+			averageRating: true,
 		};
 	}
 
