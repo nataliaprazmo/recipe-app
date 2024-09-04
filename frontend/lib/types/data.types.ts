@@ -54,6 +54,7 @@ export type BasicRecipe = IdNamePair & {
 	servingsNumber: number;
 	category: Category;
 	ratings: Rating[];
+	averageRating: number | null;
 };
 
 export type Recipe = BasicRecipe & {

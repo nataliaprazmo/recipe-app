@@ -62,16 +62,3 @@ export async function fetchRecipeComments(recipeId: string) {
 		throw new Error("Failed to fetch recipe's comments.");
 	}
 }
-
-export async function fetchRecipeAverageRating(recipeId: string) {
-	try {
-		const data = await getFromEndpointById<{
-			message: string;
-			avgScore: number;
-		}>(ENDPOINTS.RECIPES.RATINGS.AVERAGE, recipeId);
-		return data.avgScore;
-	} catch (error) {
-		console.error("Database Error:", error);
-		throw new Error("Failed to fetch recipe's average rating.");
-	}
-}

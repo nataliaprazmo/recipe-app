@@ -1,4 +1,4 @@
-import { fetchRecipeAverageRating, fetchRecipeOfTheDay } from "@/lib/data";
+import { fetchRecipeOfTheDay } from "@/lib/data";
 import Button from "../ui/button";
 import Image from "next/image";
 import { HiOutlineClock, HiOutlineStar } from "react-icons/hi2";
@@ -6,7 +6,6 @@ import Badge from "../ui/badge";
 
 export default async function Recipe() {
 	const recipe = await fetchRecipeOfTheDay();
-	const averageRating = await fetchRecipeAverageRating(recipe.id);
 	const hours = Math.floor(recipe.preparationTime / 60);
 	const minutes = recipe.preparationTime % 60;
 	return (
@@ -47,15 +46,17 @@ export default async function Recipe() {
 						size="small"
 						text={`${recipe.servingsNumber} servings`}
 					/>
-					<Badge
-						color="primary"
-						size="big"
-						text={`${averageRating.toFixed(1)}`}
-						icon={
-							<HiOutlineStar className="text-xs sm:text-base xl:text-xl text-primary-600 stroke-1" />
-						}
-						iconLeft={false}
-					/>
+					{recipe.averageRating && (
+						<Badge
+							color="primary"
+							size="big"
+							text={`${recipe.averageRating.toFixed(1)}`}
+							icon={
+								<HiOutlineStar className="text-xs sm:text-base xl:text-xl text-primary-600 stroke-1" />
+							}
+							iconLeft={false}
+						/>
+					)}
 				</div>
 				<div className="line-clamp-3 xl:mb-14">
 					{recipe.recipeSteps.map((step, index) => (
