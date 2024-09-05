@@ -1,4 +1,4 @@
-import { apiClient } from "../api/api-client";
+import { apiClient } from "../../api/api-client";
 
 export async function getFromEndpoint<T>(endpoint: string): Promise<T> {
 	return apiClient.get(endpoint);

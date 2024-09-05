@@ -14,10 +14,9 @@ export class RecipeFiltering {
 	constructor(private prisma: PrismaClient) {}
 
 	async getFilteredAndSortedRecipes(
-		filters: RecipeFilterInput,
-		searcherId?: string
+		filters: RecipeFilterInput
 	): Promise<BasicRecipe[]> {
-		const query = this.buildQuery(filters, searcherId);
+		const query = this.buildQuery(filters);
 		const recipes = await this.prisma.recipe.findMany(query);
 		return recipes.map((recipe) => ({
 			id: recipe.id,
@@ -25,23 +24,36 @@ export class RecipeFiltering {
 			photo: recipe.photo,
 			preparationTime: recipe.preparationTime,
 			servingsNumber: recipe.servingsNumber,
+			difficultyLevel: recipe.difficultyLevel,
 			category: recipe.category,
 			ratings: recipe.ratings,
+			averageRating: recipe.averageRating,
 		}));
 	}
 
-	private buildQuery(
-		filters: RecipeFilterInput,
-		searcherId?: string
-	): RecipeFindManyArgs & {
+	private buildQuery(filters: RecipeFilterInput): RecipeFindManyArgs & {
 		include: {
 			category: true;
 			ratings: true;
 		};
 	} {
-		const { sortBy = "createdAt", sortOrder = "asc", searchTerm } = filters;
+		const {
+			sortBy = "createdAt",
+			sortOrder = "asc",
+			searchTerm,
+			limit,
+		} = filters;
 
-		const whereClause = this.buildWhereClause(filters, searcherId);
+		const whereClause = this.buildWhereClause(filters);
+
+		if (limit !== undefined && parseInt(limit)) {
+			return {
+				where: whereClause,
+				include: this.defaultIncludes,
+				orderBy: this.getOrderBy(sortBy, sortOrder, searchTerm),
+				take: parseInt(limit),
+			};
+		}
 
 		return {
 			where: whereClause,
@@ -50,17 +62,11 @@ export class RecipeFiltering {
 		};
 	}
 
-	private buildWhereClause(
-		filters: RecipeFilterInput,
-		searcherId?: string
-	): RecipeWhereInput {
+	private buildWhereClause(filters: RecipeFilterInput): RecipeWhereInput {
 		const { searchTerm } = filters;
 		const conditions: RecipeWhereInput = {};
 
-		conditions.OR = [
-			{ isPrivate: false },
-			...(searcherId ? [{ ownerId: searcherId }] : []),
-		];
+		conditions.OR = [{ isPrivate: false }];
 
 		const andConditions: RecipeWhereInput[] = [];
 
@@ -182,29 +188,30 @@ export class RecipeFiltering {
 
 	private addPreparationTimeFilter(
 		conditions: RecipeWhereInput,
-		maxPreparationTime?: number
+		maxPreparationTime?: string
 	): void {
-		if (maxPreparationTime === undefined) return;
+		if (maxPreparationTime === undefined || !parseInt(maxPreparationTime))
+			return;
 
-		conditions.preparationTime = { lte: maxPreparationTime };
+		conditions.preparationTime = { lte: parseInt(maxPreparationTime) };
 	}
 
 	private addServingNumberFilter(
 		conditions: RecipeWhereInput,
-		minServingNumber?: number,
-		maxServingNumber?: number
+		minServingNumber?: string,
+		maxServingNumber?: string
 	): void {
 		if (minServingNumber === undefined && maxServingNumber === undefined)
 			return;
 
 		const servingsCondition: Prisma.IntFilter = {};
 
-		if (minServingNumber !== undefined) {
-			servingsCondition.gte = minServingNumber;
+		if (minServingNumber !== undefined && parseInt(minServingNumber)) {
+			servingsCondition.gte = parseInt(minServingNumber);
 		}
 
-		if (maxServingNumber !== undefined) {
-			servingsCondition.lte = maxServingNumber;
+		if (maxServingNumber !== undefined && parseInt(maxServingNumber)) {
+			servingsCondition.lte = parseInt(maxServingNumber);
 		}
 
 		conditions.servingsNumber = servingsCondition;
@@ -212,11 +219,16 @@ export class RecipeFiltering {
 
 	private addDifficultyFilter(
 		conditions: RecipeWhereInput,
-		difficultyLevel?: DifficultyLevel
+		difficultyLevel?: string
 	): void {
-		if (difficultyLevel === undefined) return;
+		if (
+			difficultyLevel === undefined ||
+			!(difficultyLevel in DifficultyLevel)
+		)
+			return;
 
-		conditions.difficultyLevel = difficultyLevel;
+		conditions.difficultyLevel =
+			DifficultyLevel[difficultyLevel as keyof typeof DifficultyLevel];
 	}
 
 	private addCuisineFilter(

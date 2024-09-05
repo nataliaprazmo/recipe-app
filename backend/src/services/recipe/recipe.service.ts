@@ -76,12 +76,8 @@ export class RecipeService {
 	}
 
 	async getFilteredAndSortedRecipes(
-		filters: RecipeFilterInput,
-		searcherId?: string
+		filters: RecipeFilterInput
 	): Promise<BasicRecipe[]> {
-		return await this.recipeFiltering.getFilteredAndSortedRecipes(
-			filters,
-			searcherId
-		);
+		return await this.recipeFiltering.getFilteredAndSortedRecipes(filters);
 	}
 }

@@ -7,6 +7,8 @@ import { Suspense } from "react";
 import CategoriesSkeleton from "../skeletons/categories.skeleton";
 import RecipeOfTheDay from "./recipe-of-the-day";
 import Footer from "./footer";
+import PopularRecipes from "./popular-recipes";
+import PopularRecipesSkeleton from "../skeletons/popular-recipes-skeleton";
 
 export default function HomePage() {
 	return (
@@ -46,6 +48,9 @@ export default function HomePage() {
 				imagePriority={true}
 			/>
 			<RecipeOfTheDay />
+			<Suspense fallback={<PopularRecipesSkeleton />}>
+				<PopularRecipes />
+			</Suspense>
 			<Footer />
 		</>
 	);

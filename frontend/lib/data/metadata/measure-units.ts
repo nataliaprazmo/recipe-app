@@ -1,9 +1,6 @@
 import { ENDPOINTS } from "@/lib/api/endpoints";
 import { MeasureUnit } from "@/lib/types/data.types";
-import {
-	getFromEndpoint,
-	searchFromEndpoint,
-} from "@/lib/utils/fetching.utils";
+import { getFromEndpoint, searchFromEndpoint } from "@/lib/utils";
 
 export async function fetchMeasureUnits() {
 	try {
