@@ -53,6 +53,7 @@ export type BasicRecipe = IdNamePair & {
 	preparationTime: number;
 	servingsNumber: number;
 	category: Category;
+	difficultyLevel: string;
 	ratings: Rating[];
 	averageRating: number | null;
 };
@@ -62,7 +63,6 @@ export type Recipe = BasicRecipe & {
 	isPrivate: boolean;
 	categoryId: string;
 	cuisineId: string;
-	difficultyLevel: string;
 	createdAt: Date;
 	updatedAt: Date;
 	ingredients: RecipeIngredient[];
@@ -78,12 +78,13 @@ export type RecipeFilter = {
 	maxPreparationTime?: number;
 	minServingNumber?: number;
 	maxServingNumber?: number;
-	difficultyLevel?: DifficultyLevel;
+	difficultyLevel?: string;
 	cuisineId?: string;
 	categoryIds?: string[] | string;
 	dietaryRestrictionIds?: string[] | string;
 	sortBy?: "createdAt" | "averageRating" | "preparationTime" | "relevance";
 	sortOrder?: "asc" | "desc";
+	limit?: number;
 };
 
 export type User = IdNamePair & {

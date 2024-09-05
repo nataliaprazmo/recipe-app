@@ -36,7 +36,12 @@ export type FullRecipe = Recipe & {
 
 export type BasicRecipe = Pick<
 	Recipe,
-	"id" | "name" | "photo" | "preparationTime" | "servingsNumber"
+	| "id"
+	| "name"
+	| "photo"
+	| "preparationTime"
+	| "servingsNumber"
+	| "difficultyLevel"
 > & {
 	category: Category | null;
 	ratings: Rating[];
@@ -45,13 +50,14 @@ export type BasicRecipe = Pick<
 export type RecipeFilterInput = {
 	searchTerm?: string;
 	ingredientNames?: string[];
-	maxPreparationTime?: number;
-	minServingNumber?: number;
-	maxServingNumber?: number;
-	difficultyLevel?: DifficultyLevel;
+	maxPreparationTime?: string;
+	minServingNumber?: string;
+	maxServingNumber?: string;
+	difficultyLevel?: string;
 	cuisineId?: string;
 	categoryIds?: string[] | string;
 	dietaryRestrictionIds?: string[] | string;
 	sortBy?: "createdAt" | "averageRating" | "preparationTime" | "relevance";
 	sortOrder?: "asc" | "desc";
+	limit?: string;
 };

@@ -1,9 +1,6 @@
 import { ENDPOINTS } from "@/lib/api/endpoints";
 import { Category } from "@/lib/types/data.types";
-import {
-	getFromEndpoint,
-	searchFromEndpoint,
-} from "@/lib/utils/fetching.utils";
+import { getFromEndpoint, searchFromEndpoint } from "@/lib/utils";
 
 export async function fetchCategories() {
 	try {
