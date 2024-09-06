@@ -5,8 +5,10 @@ import Logo from "../ui/logo";
 
 export default function NavContainer({
 	children,
+	logoDark,
 }: {
 	children: React.ReactNode;
+	logoDark?: boolean;
 }) {
 	const isScrolled = useScrollEffect();
 	return (
@@ -17,7 +19,11 @@ export default function NavContainer({
 					: "bg-transparent"
 			}`}
 		>
-			<Logo dark={!isScrolled} />
+			{logoDark !== undefined ? (
+				<Logo dark={logoDark} />
+			) : (
+				<Logo dark={!isScrolled} />
+			)}
 			{children}
 		</div>
 	);
