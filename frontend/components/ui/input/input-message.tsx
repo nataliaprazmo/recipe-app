@@ -1,28 +1,33 @@
 interface InputMessagesProps {
 	inputId: string;
-	errorMessage?: string;
+	errorMessages?: string[];
 	successMessage?: string;
 	helperText?: string;
 }
 
 export default function InputMessages({
 	inputId,
-	errorMessage,
+	errorMessages,
 	successMessage,
 	helperText,
 }: InputMessagesProps) {
-	const baseClasses = "w-fit mt-1 sm:mt-2 text-p6 sm:text-p4 xl:text-p2";
+	const baseClasses = "w-fit mt-1 sm:mt-2 text-p5 sm:text-p4";
 
-	if (errorMessage) {
+	if (errorMessages) {
 		return (
-			<p
-				id={`${inputId}-error`}
-				className={`${baseClasses} text-red-600`}
-				role="alert"
-				aria-live="polite"
-			>
-				{errorMessage}
-			</p>
+			<div className="flex flex-col gap-2">
+				{errorMessages.map((errorMessage, index) => (
+					<p
+						key={index}
+						id={`${inputId}-error`}
+						className={`${baseClasses} text-red-600`}
+						role="alert"
+						aria-live="polite"
+					>
+						{errorMessage}
+					</p>
+				))}
+			</div>
 		);
 	}
 

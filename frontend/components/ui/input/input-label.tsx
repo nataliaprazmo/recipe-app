@@ -4,7 +4,7 @@ interface InputLabelProps {
 	label: string;
 	htmlFor: string;
 	required?: boolean;
-	errorMessage?: string;
+	errorMessages?: string[];
 	successMessage?: string;
 }
 
@@ -12,15 +12,15 @@ export default function InputLabel({
 	label,
 	htmlFor,
 	required,
-	errorMessage,
+	errorMessages,
 	successMessage,
 }: InputLabelProps) {
-	const colorClass = getLabelColor(errorMessage, successMessage);
+	const colorClass = getLabelColor(errorMessages, successMessage);
 
 	return (
 		<label
 			htmlFor={htmlFor}
-			className={`block text-sm font-medium mb-2 ${colorClass} ${
+			className={`block w-full text-p5 sm:text-p4 font-medium mb-2 ${colorClass} ${
 				required
 					? "after:content-['*'] after:text-red-500 after:ml-1"
 					: ""

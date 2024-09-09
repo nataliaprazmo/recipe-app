@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			type,
 			leftIcon: LeftIcon,
 			rightIcon: RightIcon,
-			errorMessage,
+			errorMessages,
 			successMessage,
 			helperText,
 			additionalClasses,
@@ -61,7 +61,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 		const inputType = getInputType(type, isPassword, showPassword);
 
 		const styleConfig = getStyleConfig(
-			errorMessage,
+			errorMessages,
 			successMessage,
 			isFocused,
 			disabled
@@ -90,7 +90,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 		return (
 			<div
 				className={`${additionalClasses} ${
-					errorMessage && "flex flex-col justify-end items-end mb-1"
+					errorMessages && "flex flex-col justify-end items-end mb-1"
 				}`}
 			>
 				{label && (
@@ -98,7 +98,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 						label={label}
 						htmlFor={inputId}
 						required={required}
-						errorMessage={errorMessage}
+						errorMessages={errorMessages}
 						successMessage={successMessage}
 					/>
 				)}
@@ -123,10 +123,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 							onFocus={handleFocus}
 							onBlur={handleBlur}
 							aria-label={label || placeholder}
-							aria-invalid={!!errorMessage}
+							aria-invalid={!!errorMessages}
 							aria-describedby={getAriaDescribedBy(
 								inputId,
-								errorMessage,
+								errorMessages,
 								successMessage,
 								helperText
 							)}
@@ -138,12 +138,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 							{...props}
 						/>
 
-						{shouldShowCharacterCount(maxLength, value.length) && (
-							<TextfieldCharacterCount
-								currentLength={value.length}
-								maxLength={maxLength!}
-							/>
-						)}
+						{value &&
+							shouldShowCharacterCount(
+								maxLength,
+								value.length
+							) && (
+								<TextfieldCharacterCount
+									currentLength={value.length}
+									maxLength={maxLength!}
+								/>
+							)}
 					</div>
 
 					<div className="flex items-center gap-2 flex-shrink-0">
@@ -167,7 +171,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 				<InputMessages
 					inputId={inputId}
-					errorMessage={errorMessage}
+					errorMessages={errorMessages}
 					successMessage={successMessage}
 					helperText={helperText}
 				/>

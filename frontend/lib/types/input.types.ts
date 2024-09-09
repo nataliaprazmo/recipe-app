@@ -3,14 +3,14 @@ export interface InputProps {
 	placeholder: string;
 	name: string;
 	id?: string;
-	value: string;
+	value?: string;
 	type: string;
 	rightIcon?: React.ComponentType<{ className?: string }> | React.ReactNode;
-	errorMessage?: string;
+	errorMessages?: string[];
 	successMessage?: string;
 	helperText?: string;
 	additionalClasses?: string;
-	changeValue: React.ChangeEventHandler;
+	changeValue?: React.ChangeEventHandler;
 	onBlur?: React.FocusEventHandler;
 	onFocus?: React.FocusEventHandler;
 	required?: boolean;

@@ -22,11 +22,11 @@ export const getInputType = (
 
 export const getAriaDescribedBy = (
 	inputId: string,
-	errorMessage?: string,
+	errorMessages?: string[],
 	successMessage?: string,
 	helperText?: string
 ): string | undefined => {
-	if (errorMessage) return `${inputId}-error`;
+	if (errorMessages) return `${inputId}-error`;
 	if (successMessage) return `${inputId}-success`;
 	if (helperText) return `${inputId}-helper`;
 	return undefined;
@@ -40,15 +40,15 @@ export const shouldShowCharacterCount = (
 };
 
 export const getStyleConfig = (
-	errorMessage?: string,
+	errorMessages?: string[],
 	successMessage?: string,
 	isFocused?: boolean,
 	disabled?: boolean
 ): StyleConfig => {
 	return {
-		borderColor: getBorderColor(errorMessage, successMessage, isFocused),
+		borderColor: getBorderColor(errorMessages, successMessage, isFocused),
 		iconColor: getIconColor(
-			errorMessage,
+			errorMessages,
 			successMessage,
 			isFocused,
 			disabled
