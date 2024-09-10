@@ -1,6 +1,7 @@
 import NavContainer from "../nav/nav-container";
 import Button from "../ui/button";
-import SignupContainer from "./SignupContainer";
+import SigninForm from "./sign-in-form";
+import SignupContainer from "./signup-container";
 
 export default function SignIn() {
 	return (
@@ -18,7 +19,9 @@ export default function SignIn() {
 				page="signin"
 				title="Welcome back!"
 				text="Sign in to access your saved recipes, discover new culinary delights, and join our vibrant food-loving community. Your next favorite dish awaits!"
-			/>
+			>
+				<SigninForm />
+			</SignupContainer>
 		</div>
 	);
 }

@@ -1,17 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import SignupForm from "./SignupForm";
 
 interface SignUpContainerProps {
 	page: "signup" | "signin";
 	title: string;
 	text: string;
+	children: React.ReactNode;
 }
 
 export default function SignupContainer({
 	page,
 	title,
 	text,
+	children,
 }: SignUpContainerProps) {
 	const imageSrc = `/images/${page}.webp`;
 	return (
@@ -23,9 +24,7 @@ export default function SignupContainer({
 				<p className="hidden xxs:block text-p5 sm:text-p3 xl:text-p2 text-grey-700 mb-4 sm:mb-6 xl:mb-12 font-medium w-full sm:w-3/4 lg:w-full">
 					{text}
 				</p>
-				<SignupForm />
-				{/* {page === "signin" && <SigninForm />}
-					{page === "signup" && <SignupForm />} */}
+				{children}
 				<div className="mt-8 sm:mt-12 xl:mt-auto flex flex-row justify-start items-center mb-8">
 					<p className="text-grey-800 text-p5 sm:text-p4 xl:text-p3 mr-4">
 						{page === "signin"
