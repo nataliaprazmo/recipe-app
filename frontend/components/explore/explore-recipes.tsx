@@ -10,6 +10,7 @@ export default function ExploreRecipes({ searchTerm }: { searchTerm: string }) {
 			<NavContainer logoDark={false}>
 				<form action={logoutUser}>
 					<Button
+						type="submit"
 						variant="filled"
 						size="medium"
 						color="secondary"
