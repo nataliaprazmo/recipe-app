@@ -90,6 +90,6 @@ export async function loginUser(
 		};
 	}
 
-	revalidatePath("/");
-	redirect("/");
+	revalidatePath("/explore");
+	redirect("/explore");
 }
