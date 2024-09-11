@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { useDebouncedCallback } from "use-debounce";
@@ -7,6 +8,8 @@ import { useDebouncedCallback } from "use-debounce";
 export default function SearchBar() {
 	const [query, setQuery] = useState<string>("");
 	const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+
+	const router = useRouter();
 
 	const handleDebouncedChange = useDebouncedCallback((value: string) => {
 		console.log(`Searching... ${value}`);
@@ -21,8 +24,9 @@ export default function SearchBar() {
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();
-		console.log("Searching for:", debouncedQuery.trim());
-		// TODO search call
+		const searchTerm = debouncedQuery.trim();
+		if (!searchTerm) return;
+		router.push(`/explore?searchTerm=${encodeURIComponent(searchTerm)}`);
 	};
 
 	return (

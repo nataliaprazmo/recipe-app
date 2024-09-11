@@ -18,6 +18,7 @@ export default function HomePage() {
 					variant="filled"
 					color="primary"
 					size="large"
+					link="/signup"
 					text="Get started"
 				/>
 			</NavContainer>{" "}
