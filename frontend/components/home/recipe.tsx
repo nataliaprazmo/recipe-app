@@ -9,7 +9,7 @@ export default async function Recipe() {
 	const hours = Math.floor(recipe.preparationTime / 60);
 	const minutes = recipe.preparationTime % 60;
 	return (
-		<div className="flex flex-col xl:flex-row gap-4 sm:gap-6 xl:gap-16 justify-between items-center sm:items-start w-full">
+		<div className="flex flex-col md:flex-row gap-4 sm:gap-6 xl:gap-14 justify-between items-center sm:items-start w-full">
 			<Image
 				alt={recipe.name}
 				src={recipe.photo}
@@ -19,16 +19,16 @@ export default async function Recipe() {
 					objectFit: "cover",
 				}}
 				loading="lazy"
-				className="w-3/4 sm:w-6/8 xl:w-1/3 aspect-square rounded-4xl shadow-s1"
+				className="w-3/4 sm:w-2/3 xl:w-3/5 aspect-square rounded-4xl shadow-s1"
 			/>
 			<div className="flex flex-col w-full xl:w-8/12 h-full justify-between items-center sm:items-start">
-				<h3 className="text-p3 sm:text-h4 lg:text-h3 font-semibold mb-3 xl:mb-6 text-grey-800 text-center sm:text-left">
+				<h3 className="text-p3 font-lato sm:text-h4 lg:text-h3 font-medium mb-3 xl:mb-6 text-grey-800 text-center sm:text-left">
 					{recipe.name}
 				</h3>
 				<div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4 mb-6 sm:mb-8">
 					<Badge
 						color="primary"
-						size="big"
+						size="medium"
 						text={`${hours !== 0 ? hours + "h " : ""}${
 							minutes !== 0 ? minutes + "min" : ""
 						}`}
@@ -43,13 +43,13 @@ export default async function Recipe() {
 					/>
 					<Badge
 						color="primary"
-						size="small"
+						size="medium"
 						text={`${recipe.servingsNumber} servings`}
 					/>
 					{recipe.averageRating && (
 						<Badge
 							color="primary"
-							size="big"
+							size="medium"
 							text={`${recipe.averageRating.toFixed(1)}`}
 							icon={
 								<HiOutlineStar className="text-xs sm:text-base xl:text-xl text-primary-600 stroke-1" />
@@ -58,16 +58,19 @@ export default async function Recipe() {
 						/>
 					)}
 				</div>
-				<div className="line-clamp-3 xl:mb-14">
+				<div className="line-clamp-3 md:line-clamp-2 lg:line-clamp-5 sm:mb-8 xl:mb-12">
 					{recipe.recipeSteps.map((step, index) => (
-						<div key={index} className="hidden xl:block xl:mb-10">
-							<p className="text-p1 font-semibold text-grey-700 mb-2">
+						<div
+							key={index}
+							className="hidden sm:block sm:mb-4 xl:mb-6"
+						>
+							<p className="text-p3 lg:text-p2 font-semibold text-grey-700 mb-2">
 								{step.name}:
 							</p>
 							<ul>
 								{step.stepBullets.map((bullet, bulletIndex) => (
 									<li
-										className="text-p2 text-grey-700 mb-1"
+										className="text-p4 lg:text-p3 text-grey-700 mb-1"
 										key={bulletIndex}
 									>
 										{bullet.content}

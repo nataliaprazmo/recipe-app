@@ -23,17 +23,17 @@ h6 {
 }
 
 h1 {
-	@apply text-h1;
+	@apply text-h1 max-w-header;
 }
 
 h2 {
-	@apply text-h2;
+	@apply text-h2 max-w-header;
 }
 
 h3 {
-	@apply text-h3;
+	@apply text-h3 max-w-4xl;
 }
 
 h4 {
-	@apply text-h4;
+	@apply text-h4 max-w-4xl;
 }

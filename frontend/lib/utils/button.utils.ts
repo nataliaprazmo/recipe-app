@@ -9,7 +9,7 @@ import {
 	baseClasses,
 	getShadowClasses,
 	getFocusClasses,
-} from "@/styles/button-styles.config";
+} from "@/styles/button.styles";
 
 export const cn = (...classes: (string | undefined | false)[]): string => {
 	return classes.filter(Boolean).join(" ");

@@ -73,8 +73,10 @@ const config: Config = {
 			},
 			screens: {
 				xxs: "22.5rem",
-				xs: "29.7rem",
 				"3xl": "112.5rem",
+			},
+			maxWidth: {
+				header: "25ch",
 			},
 			boxShadow: {
 				e1: `0px 2px 6px 2px rgba(33, 63, 8, 0.15),

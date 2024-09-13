@@ -22,11 +22,19 @@ export default function RecipeThumbnail({
 			: size === "medium"
 			? 256
 			: size === "big"
-			? 285
+			? 275
 			: 300;
+	const sizeClasses =
+		size === "small"
+			? "w-[224px]"
+			: size === "medium"
+			? "w-[256px]"
+			: size === "big"
+			? "w-[275px]"
+			: "w-[300px]";
 	return (
 		<div
-			className={`flex flex-col items-start justify-start w-[${sizes}px]`}
+			className={`flex flex-col items-start justify-start ${sizeClasses}`}
 		>
 			{!icon && <RecipePhoto sizes={sizes} imageSrc={recipe.photo} />}
 			{icon && (
@@ -37,12 +45,12 @@ export default function RecipeThumbnail({
 				/>
 			)}
 			<p
-				className={`text-p2 text-grey-800 mt-6 mb-3 font-bold w-[${sizes}px]`}
+				className={`text-p2 text-grey-800 mt-6 mb-3 font-bold ${sizeClasses}`}
 			>
 				{recipe.name}
 			</p>
 			<div
-				className={`flex flex-row flex-wrap gap-x-2 gap-y-1 w-[${sizes}px]`}
+				className={`flex flex-row flex-wrap gap-x-2 gap-y-1 ${sizeClasses}`}
 			>
 				{recipe.preparationTime && (
 					<Badge

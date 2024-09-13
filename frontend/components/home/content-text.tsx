@@ -19,16 +19,16 @@ const ContentText: React.FC<ContentTextProps> = ({
 		<div
 			className={`flex flex-col gap-2 xl:gap-4 items-start w-full xl:w-4/12 ${className}`}
 		>
-			<h3 className="text-xl leading-5 sm:text-h4 xl:text-h3 text-grey-800 font-bold">
+			<h3 className="text-p2 max-w-header font-lato sm:text-h4 xl:text-h3 text-grey-800 font-bold md:mb-2">
 				{title}
 			</h3>
-			<p className="text-p5 sm:text-p3 text-grey-700 font-medium w-full md:w-3/4 xl:w-full">
+			<p className="text-p5 sm:text-p3 text-grey-700 font-medium max-w-prose mb-3 md:mb-6">
 				{text}
 			</p>
 			<Button
 				variant="filled"
 				color="secondary"
-				size="small"
+				size="medium"
 				text={buttonText}
 				link={buttonLink}
 				additionalclasses="xl:text-p2 xl:px-12 xl:py-4 xl:gap-4 xl:shadow-e1"
