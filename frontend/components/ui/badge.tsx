@@ -20,7 +20,7 @@ export default function Badge({
 			? "gap-1 sm:gap-2 xl:gap-4 px-3 py-1.5 sm:px-4 xl:px-6 xl:py-2"
 			: size === "medium"
 			? "gap-1 sm:gap-2 xl:gap-4 px-2.5 py-0.5 sm:py-1 sm:px-5"
-			: "gap-0.5 px-3 py-1";
+			: "gap-0.5 py-0.5 px-2.5 md:px-3 sm:py-1 sm:gap-1 xl:gap-1.5";
 	return (
 		<div
 			className={`flex ${
@@ -32,13 +32,23 @@ export default function Badge({
 			} ${sizeClasses} ${classes}`}
 		>
 			<p
-				className={`text-p5 sm:text-p4 xl:text-p3 font-semibold ${
+				className={`text-p6 sm:text-p5 xl:text-p4 font-semibold ${
 					color === "primary" ? "text-primary-600" : "text-grey-600"
 				}`}
 			>
 				{text}
 			</p>
-			{icon && <span>{icon}</span>}
+			{icon && (
+				<span
+					className={`text-xs sm:text-base xl:text-xl ${
+						color === "primary"
+							? "text-primary-600"
+							: "text-grey-600"
+					} stroke-1`}
+				>
+					{icon}
+				</span>
+			)}
 		</div>
 	);
 }

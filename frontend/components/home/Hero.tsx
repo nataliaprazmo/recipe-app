@@ -5,8 +5,8 @@ import SearchBar from "../ui/search-bar";
 export default function Hero() {
 	return (
 		<section className="bg-hero bg-cover bg-center h-fit w-full">
-			<div className="bg-black bg-opacity-75 h-fit pt-24 flex-col gap-24 justify-start w-full">
-				<div className="flex-col px-6 sm:px-24 2xl:px-184 items-center justify-center mt-24">
+			<div className="bg-black bg-opacity-75 h-fit pt-24 pb-12 flex flex-col gap-24 justify-start w-full">
+				<div className="flex flex-col px-6 sm:px-24 2xl:px-184 items-center justify-center mt-24">
 					<h1 className="text-grey-100 font-bold text-center mb-4 md:mb-5 xl:mb-6 text-h3 md:text-h2 3xl:text-h1 mx-auto">
 						Browse, store, and share your favorite recipes with ease
 					</h1>
@@ -29,7 +29,7 @@ export default function Hero() {
 								/>
 							}
 							text="Discover More"
-							additionalclasses="text-p5 sm:text-p4 lg:text-p3 3xl:text-p2 font-medium gap-4 pb-12"
+							additionalclasses="text-p5 sm:text-p4 lg:text-p3 3xl:text-p2 font-medium gap-4"
 						/>
 					</div>
 				</div>

@@ -9,7 +9,7 @@ export default async function Recipe() {
 	const hours = Math.floor(recipe.preparationTime / 60);
 	const minutes = recipe.preparationTime % 60;
 	return (
-		<div className="flex flex-col md:flex-row gap-4 sm:gap-6 xl:gap-14 justify-between items-center sm:items-start w-full">
+		<div className="flex flex-col md:flex-row gap-4 sm:gap-6 xl:gap-14 justify-between items-center sm:items-start md:items-center w-full">
 			<Image
 				alt={recipe.name}
 				src={recipe.photo}
@@ -19,7 +19,7 @@ export default async function Recipe() {
 					objectFit: "cover",
 				}}
 				loading="lazy"
-				className="w-3/4 sm:w-2/3 xl:w-3/5 aspect-square rounded-4xl shadow-s1"
+				className="w-3/4 sm:w-2/3 xl:w-3/6 aspect-square rounded-4xl shadow-s1"
 			/>
 			<div className="flex flex-col w-full xl:w-8/12 h-full justify-between items-center sm:items-start">
 				<h3 className="text-p3 font-lato sm:text-h4 lg:text-h3 font-medium mb-3 xl:mb-6 text-grey-800 text-center sm:text-left">
@@ -32,9 +32,7 @@ export default async function Recipe() {
 						text={`${hours !== 0 ? hours + "h " : ""}${
 							minutes !== 0 ? minutes + "min" : ""
 						}`}
-						icon={
-							<HiOutlineClock className="text-xs sm:text-base xl:text-xl text-primary-600 stroke-1" />
-						}
+						icon={<HiOutlineClock />}
 					/>
 					<Badge
 						color="primary"
@@ -51,9 +49,7 @@ export default async function Recipe() {
 							color="primary"
 							size="medium"
 							text={`${recipe.averageRating.toFixed(1)}`}
-							icon={
-								<HiOutlineStar className="text-xs sm:text-base xl:text-xl text-primary-600 stroke-1" />
-							}
+							icon={<HiOutlineStar />}
 							iconLeft={false}
 						/>
 					)}

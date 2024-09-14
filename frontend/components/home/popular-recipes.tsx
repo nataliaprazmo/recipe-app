@@ -12,9 +12,9 @@ export default async function PopularRecipes() {
 			<h3 className="text-p2 font-lato sm:text-h4 xl:text-h3">
 				Popular recipes
 			</h3>
-			<div className="flex flex-row flex-nowrap overflow-y-visible items-start justify-between w-fit">
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8 w-full max-w-72 sm:max-w-[1600px]">
 				{popularRecipes.map((recipe, index) => (
-					<RecipeThumbnail key={index} size="big" recipe={recipe} />
+					<RecipeThumbnail key={index} recipe={recipe} />
 				))}
 			</div>
 		</section>

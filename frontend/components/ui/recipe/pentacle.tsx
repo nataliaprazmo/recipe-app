@@ -1,8 +1,9 @@
 const Pentacle: React.FC<{
-	size: number;
-	radius: number;
 	imageSrc: string;
-}> = ({ size, radius, imageSrc }) => {
+}> = ({ imageSrc }) => {
+	const radius = 24;
+	const size = 300;
+
 	const midPoint = (2 / 3) * size;
 	const pathData = `
     M ${radius},0 
@@ -21,8 +22,11 @@ const Pentacle: React.FC<{
     Z
   `;
 	return (
-		<>
-			<svg width={size} height={size}>
+		<div className="w-full aspect-square relative">
+			<svg
+				viewBox="0 0 300 300"
+				className="w-full h-full absolute top-0 left-0"
+			>
 				<defs>
 					<clipPath id="pentacleClipPath">
 						<path d={pathData} />
@@ -30,16 +34,15 @@ const Pentacle: React.FC<{
 				</defs>
 				<image
 					href={imageSrc}
-					width={size}
-					height={size}
+					width="100%"
+					height="100%"
 					clipPath="url(#pentacleClipPath)"
 					preserveAspectRatio="xMidYMid slice"
 				/>
 			</svg>
 			<svg
-				width={size}
-				height={size}
-				style={{ position: "absolute", top: 0, left: 0 }}
+				viewBox="0 0 300 300"
+				className="w-full h-full absolute top-0 left-0"
 			>
 				<path
 					d={pathData}
@@ -48,7 +51,7 @@ const Pentacle: React.FC<{
 					clipPath="url(#pentacleClipPath)"
 				/>
 			</svg>
-		</>
+		</div>
 	);
 };
 
