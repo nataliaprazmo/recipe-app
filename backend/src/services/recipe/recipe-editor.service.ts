@@ -51,26 +51,6 @@ export class RecipeEditor {
 		});
 	}
 
-	// private async updateMainRecipe(
-	// 	tx: Prisma.TransactionClient,
-	// 	id: string,
-	// 	input: UpdateRecipeInput
-	// ) {
-	// 	await tx.recipe.update({
-	// 		where: { id },
-	// 		data: {
-	// 			name: input.name?.trim(),
-	// 			isPrivate: input.isPrivate,
-	// 			categoryId: input.categoryId,
-	// 			photo: input.photo?.trim(),
-	// 			servingsNumber: input.servingsNumber,
-	// 			preparationTime: input.preparationTime,
-	// 			cuisineId: input.cuisineId,
-	// 			difficultyLevel: input.difficultyLevel,
-	// 		},
-	// 	});
-	// }
-
 	private async updateMainRecipe(
 		tx: Prisma.TransactionClient,
 		id: string,

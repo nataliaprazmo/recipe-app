@@ -141,7 +141,7 @@ export class RecipeFiltering {
 			filters.maxServingNumber
 		);
 		this.addDifficultyFilter(filterConditions, filters.difficultyLevel);
-		this.addCuisineFilter(filterConditions, filters.cuisineId);
+		this.addCuisineFilter(filterConditions, filters.cuisineIds);
 		this.addCategoryFilter(filterConditions, filters.categoryIds);
 		this.addDietaryRestrictionFilter(
 			filterConditions,
@@ -233,11 +233,15 @@ export class RecipeFiltering {
 
 	private addCuisineFilter(
 		conditions: RecipeWhereInput,
-		cuisineId?: string
+		cuisineIds?: string[] | string
 	): void {
-		if (cuisineId === undefined) return;
+		if (!cuisineIds) return;
 
-		conditions.cuisineId = cuisineId;
+		const idsArray = Array.isArray(cuisineIds) ? cuisineIds : [cuisineIds];
+
+		if (idsArray.length === 0) return;
+
+		conditions.categoryId = { in: idsArray };
 	}
 
 	private addCategoryFilter(
