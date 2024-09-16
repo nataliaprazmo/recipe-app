@@ -5,7 +5,7 @@ import Hero from "./hero";
 import CategoriesSection from "./categories-section";
 import { Suspense } from "react";
 import CategoriesSkeleton from "../skeletons/categories.skeleton";
-import RecipeOfTheDay from "./recipe-of-the-day";
+import RecipeOfTheDaySection from "./recipe-of-the-day-section";
 import Footer from "./footer";
 import PopularRecipes from "./popular-recipes";
 import PopularRecipesSkeleton from "../skeletons/popular-recipes-skeleton";
@@ -48,7 +48,7 @@ export default function HomePage() {
 				imageAlt="Content 2"
 				imagePriority={true}
 			/>
-			<RecipeOfTheDay />
+			<RecipeOfTheDaySection />
 			<TwoColumnContent
 				id="content1"
 				textLeft={true}

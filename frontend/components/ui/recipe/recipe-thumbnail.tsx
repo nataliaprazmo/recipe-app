@@ -2,6 +2,7 @@ import { HiOutlineClock, HiOutlineStar } from "react-icons/hi2";
 import Badge from "../badge";
 import RecipePhoto from "./recipe-photo";
 import { BasicRecipe } from "@/lib/types/data.types";
+import Link from "next/link";
 
 interface RecipeThumbnailProps {
 	icon?: React.ReactNode;
@@ -22,11 +23,22 @@ export default function RecipeThumbnail({
 				className || ""
 			}`}
 		>
-			{!icon && <RecipePhoto imageSrc={recipe.photo} />}
-			{icon && <RecipePhoto imageSrc={recipe.photo} icon={icon} />}
-			<p className="text-p5 sm:text-p3 xl:text-p2 text-grey-800 mt-6 mb-3 font-bold w-full">
+			{!icon && (
+				<RecipePhoto imageSrc={recipe.photo} recipeId={recipe.id} />
+			)}
+			{icon && (
+				<RecipePhoto
+					imageSrc={recipe.photo}
+					recipeId={recipe.id}
+					icon={icon}
+				/>
+			)}
+			<Link
+				href={`/recipe/${recipe.id}`}
+				className="text-p5 sm:text-p3 xl:text-p2 text-grey-800 mt-6 mb-3 font-bold w-full hover:scale-105 hover:text-primary-800 transition-all"
+			>
 				{recipe.name}
-			</p>
+			</Link>
 			<div className="flex flex-row flex-wrap gap-x-2 gap-y-1 w-full">
 				{recipe.preparationTime && (
 					<Badge

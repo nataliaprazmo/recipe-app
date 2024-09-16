@@ -1,6 +1,8 @@
+import RecipeGrid from "../ui/recipe/recipe-grid";
+
 export default function RecipeThumbnailSkeleton() {
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8 w-full max-w-72 sm:max-w-[1600px] animate-pulse">
+		<RecipeGrid className="animate-pulse">
 			{Array.from({ length: 5 }).map((_, index) => (
 				<div
 					key={index}
@@ -14,6 +16,6 @@ export default function RecipeThumbnailSkeleton() {
 					</div>
 				</div>
 			))}
-		</div>
+		</RecipeGrid>
 	);
 }

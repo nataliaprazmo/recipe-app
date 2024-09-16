@@ -1,6 +1,9 @@
+import Link from "next/link";
+
 const Pentacle: React.FC<{
 	imageSrc: string;
-}> = ({ imageSrc }) => {
+	recipeId: string;
+}> = ({ imageSrc, recipeId }) => {
 	const radius = 24;
 	const size = 300;
 
@@ -22,36 +25,38 @@ const Pentacle: React.FC<{
     Z
   `;
 	return (
-		<div className="w-full aspect-square relative">
-			<svg
-				viewBox="0 0 300 300"
-				className="w-full h-full absolute top-0 left-0"
-			>
-				<defs>
-					<clipPath id="pentacleClipPath">
-						<path d={pathData} />
-					</clipPath>
-				</defs>
-				<image
-					href={imageSrc}
-					width="100%"
-					height="100%"
-					clipPath="url(#pentacleClipPath)"
-					preserveAspectRatio="xMidYMid slice"
-				/>
-			</svg>
-			<svg
-				viewBox="0 0 300 300"
-				className="w-full h-full absolute top-0 left-0"
-			>
-				<path
-					d={pathData}
-					fill="black"
-					opacity="0.15"
-					clipPath="url(#pentacleClipPath)"
-				/>
-			</svg>
-		</div>
+		<Link href={`/recipe/${recipeId}`} className="group">
+			<div className="w-full aspect-square relative group-hover:scale-105 transition-all">
+				<svg
+					viewBox="0 0 300 300"
+					className="w-full h-full absolute top-0 left-0"
+				>
+					<defs>
+						<clipPath id="pentacleClipPath">
+							<path d={pathData} />
+						</clipPath>
+					</defs>
+					<image
+						href={imageSrc}
+						width="100%"
+						height="100%"
+						clipPath="url(#pentacleClipPath)"
+						preserveAspectRatio="xMidYMid slice"
+					/>
+				</svg>
+				<svg
+					viewBox="0 0 300 300"
+					className="w-full h-full absolute top-0 left-0"
+				>
+					<path
+						d={pathData}
+						fill="black"
+						opacity="0.15"
+						clipPath="url(#pentacleClipPath)"
+					/>
+				</svg>
+			</div>
+		</Link>
 	);
 };
 
