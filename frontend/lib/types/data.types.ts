@@ -79,7 +79,7 @@ export type RecipeFilter = {
 	minServingNumber?: number;
 	maxServingNumber?: number;
 	difficultyLevel?: string;
-	cuisineId?: string;
+	cuisineIds?: string[] | string;
 	categoryIds?: string[] | string;
 	dietaryRestrictionIds?: string[] | string;
 	sortBy?: "createdAt" | "averageRating" | "preparationTime" | "relevance";

@@ -28,9 +28,6 @@ const addStringParameters = (params: string[], filter: RecipeFilter): void => {
 	if (filter.searchTerm) {
 		addParam(params, "searchTerm", filter.searchTerm, true);
 	}
-	if (filter.cuisineId) {
-		addParam(params, "cuisineId", filter.cuisineId, true);
-	}
 };
 
 const addNumericParameters = (params: string[], filter: RecipeFilter): void => {
@@ -68,6 +65,9 @@ const addArrayParameters = (params: string[], filter: RecipeFilter): void => {
 		filter.ingredientNames.forEach((ingredient) =>
 			addParam(params, "ingredientNames", ingredient, true)
 		);
+	}
+	if (filter.cuisineIds) {
+		addArrayParam(params, "cuisineIds", filter.cuisineIds);
 	}
 	if (filter.categoryIds) {
 		addArrayParam(params, "categoryIds", filter.categoryIds);
