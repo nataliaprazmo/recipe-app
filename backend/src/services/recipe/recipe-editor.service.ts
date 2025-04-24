@@ -56,9 +56,8 @@ export class RecipeEditor {
 		id: string,
 		input: UpdateRecipeInput
 	) {
-		await tx.recipe.update({
-			where: { id },
-			data: {
+		const updateData = Object.fromEntries(
+			Object.entries({
 				name: input.name?.trim(),
 				isPrivate: input.isPrivate,
 				categoryId: input.categoryId,
@@ -67,8 +66,15 @@ export class RecipeEditor {
 				preparationTime: input.preparationTime,
 				cuisineId: input.cuisineId,
 				difficultyLevel: input.difficultyLevel,
-			},
-		});
+			}).filter(([_, value]) => value !== undefined)
+		);
+
+		if (Object.keys(updateData).length > 0) {
+			await tx.recipe.update({
+				where: { id },
+				data: updateData,
+			});
+		}
 	}
 
 	private async updateIngredients(

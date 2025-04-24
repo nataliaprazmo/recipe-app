@@ -56,9 +56,9 @@ export const buttonStyles: ButtonStyleConfig = {
 	},
 
 	size: {
-		large: "text-p3 px-8 py-3 gap-2 md:text-p2 md:px-10 md:py-3 md:gap-2 xl:text-p1 xl:px-12 xl:py-4 xl:gap-4",
-		medium: "md:text-p3 md:px-9 md:py-3 text-p4 px-8 py-2.5 gap-3",
-		small: "text-p4 px-6 py-2.5 gap-2",
+		large: "text-p4 px-7 py-2.5 gap-2 md:text-p3 md:px-8 md:py-2.5 xl:px-10 xl:py-3 xl:text-p2 xl:gap-4",
+		medium: "xl:text-p3 xl:px-8 xl:py-2.5 text-p5 md:px-6 px-5 py-2 gap-2",
+		small: "text-p6 px-4 md:text-p5 md:px-5 md:py-1.5 py-1 gap-2",
 	},
 };
 

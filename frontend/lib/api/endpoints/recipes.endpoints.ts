@@ -5,7 +5,4 @@ export const RECIPES_ENDPOINTS = {
 	TOGGLE_PRIVACY: (id: string) => `/recipes/toggle-privacy/${id}`,
 	FILTERED: "/recipes/filtered",
 	COMMENTS: (recipeId: string) => `/recipes/comments/${recipeId}`,
-	RATINGS: {
-		AVERAGE: (recipeId: string) => `/recipes/ratings/${recipeId}/average`,
-	},
 } as const;

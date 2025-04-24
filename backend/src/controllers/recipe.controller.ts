@@ -226,13 +226,9 @@ class RecipeController {
 		reply: FastifyReply
 	): Promise<void> {
 		try {
-			const userId = request.user.id;
 			const filters = request.query;
 			const filteredRecipes =
-				await this.recipeService.getFilteredAndSortedRecipes(
-					filters,
-					userId
-				);
+				await this.recipeService.getFilteredAndSortedRecipes(filters);
 			await reply
 				.status(200)
 				.send({ message: "Fetched filtered recipes", filteredRecipes });

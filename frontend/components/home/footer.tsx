@@ -33,7 +33,7 @@ export default function Footer() {
 						<h3 className="text-xl sm:text-h4 lg:text-h3 text-grey-100 mb-2 sm:mb-3">
 							Become a recipe insider
 						</h3>
-						<p className="text-p4 lg:text-p3 text-grey-200 mb-6 sm:mb-8">
+						<p className="text-p4 lg:text-p3 text-grey-200 max-w-prose mb-6 sm:mb-8">
 							Unlock a world of delicious recipes and connect with
 							fellow food enthusiasts. By signing in, you gain
 							access to personalized recipe suggestions, exclusive
@@ -50,7 +50,7 @@ export default function Footer() {
 							additionalclasses="sm:text-p2 sm:px-12 sm:py-4 sm:gap-4"
 						/>
 					</div>
-					<div className="w-full sm:w-fit 2xl:w-full ml-0 lg:ml-8 2xl:ml-0 flex flex-col xs:flex-row sm:flex-col lg:flex-row justify-between gap-4 mt-6 sm:mt-0">
+					<div className="w-full sm:w-fit 2xl:w-full ml-0 lg:ml-8 2xl:ml-0 flex flex-col lg:flex-row justify-between gap-4 mt-6 sm:mt-0">
 						<FooterLinks title="Navigation" links={navLinks} />
 						<FooterLinks title="Get in touch" texts={contactInfo} />
 						<FooterLinks title="Socials" icons={icons} />

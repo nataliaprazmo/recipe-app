@@ -1,7 +1,4 @@
-import {
-	getFromEndpoint,
-	getFromEndpointById,
-} from "@/lib/utils/fetching.utils";
+import { getFromEndpoint, getFromEndpointById } from "@/lib/utils";
 import { ENDPOINTS } from "../api/endpoints";
 import { BasicRecipe, Rating, User } from "../types/data.types";
 

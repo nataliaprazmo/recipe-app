@@ -1,30 +1,67 @@
+import { cookies } from "next/headers";
 import { ApiError } from "./api-error";
 
-const API_BASE_URL =
+const DEFAULT_API_BASE_URL =
 	process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
-export class ApiClient {
-	private baseURL: string;
+export interface ApiClientConfig {
+	baseURL?: string;
+	defaultHeaders?: Record<string, string>;
+}
 
-	constructor(baseURL: string = API_BASE_URL) {
+export class ApiClient {
+	private readonly baseURL: string;
+	private readonly defaultHeaders: Record<string, string>;
+
+	constructor({
+		baseURL = DEFAULT_API_BASE_URL,
+		defaultHeaders = { "Content-Type": "application/json" },
+	}: ApiClientConfig = {}) {
 		this.baseURL = baseURL;
+		this.defaultHeaders = defaultHeaders;
 	}
 
-	async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-		const url = `${this.baseURL}${endpoint}`;
+	private isServer(): boolean {
+		return typeof window === "undefined";
+	}
 
-		const config: RequestInit = {
-			credentials: "include",
-			headers: {
-				"Content-Type": "application/json",
-				...options.headers,
-			},
-			...options,
+	private async getAuthHeaders(): Promise<Record<string, string>> {
+		if (!this.isServer()) return {};
+		try {
+			const cookieStore = await cookies();
+			const token = cookieStore.get("token");
+			return token ? { Cookie: `token=${token.value}` } : {};
+		} catch (error) {
+			console.warn("Could not access cookies:", error);
+			return {};
+		}
+	}
+
+	private async buildRequestConfig(
+		options: RequestInit
+	): Promise<RequestInit> {
+		const authHeaders = await this.getAuthHeaders();
+
+		const headers: Record<string, string> = {
+			...this.defaultHeaders,
+			...(options.headers as Record<string, string>),
+			...authHeaders,
 		};
 
-		const response = await fetch(url, config);
-		const data = await response.json();
+		const config: RequestInit = {
+			...options,
+			headers,
+		};
 
+		if (!this.isServer()) {
+			config.credentials = "include";
+		}
+
+		return config;
+	}
+
+	private async handleResponse<T>(response: Response): Promise<T> {
+		const data = await response.json();
 		if (!response.ok) {
 			throw new ApiError(
 				response.status,
@@ -32,18 +69,27 @@ export class ApiClient {
 				data
 			);
 		}
-
 		return data;
 	}
 
-	get<T>(endpoint: string): Promise<T> {
-		return this.request<T>(endpoint, {
-			method: "GET",
-		});
+	async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+		const url = `${this.baseURL}${endpoint}`;
+		const config = await this.buildRequestConfig(options);
+		const response = await fetch(url, config);
+		return this.handleResponse<T>(response);
 	}
 
-	post<T>(endpoint: string, data: unknown): Promise<T> {
+	get<T>(endpoint: string, options?: RequestInit): Promise<T> {
+		return this.request<T>(endpoint, { ...options, method: "GET" });
+	}
+
+	post<T>(
+		endpoint: string,
+		data: unknown,
+		options?: RequestInit
+	): Promise<T> {
 		return this.request<T>(endpoint, {
+			...options,
 			method: "POST",
 			body: JSON.stringify(data),
 		});

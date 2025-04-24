@@ -73,7 +73,6 @@ export async function recipeRoutes(fastify: FastifyInstance) {
 
 	fastify.get<{ Querystring: RecipeFilterInput; Reply: Recipe[] }>(
 		"/filtered",
-		{ preHandler: [fastify.auth] },
 		recipeController.getFilteredAndSortedRecipes.bind(recipeController)
 	);
 
