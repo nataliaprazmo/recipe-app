@@ -1,4 +1,4 @@
-import { PrismaClient, Recipe } from "@prisma/client";
+import { DifficultyLevel, PrismaClient, Recipe } from "@prisma/client";
 import { BasicRecipe, FullRecipe } from "../../types/recipe.types";
 import crypto from "crypto";
 
@@ -83,6 +83,8 @@ export class RecipeReader {
 			servingsNumber: true,
 			category: true,
 			ratings: true,
+			difficultyLevel: true,
+			averageRating: true,
 		};
 	}
 

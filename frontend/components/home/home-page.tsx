@@ -5,8 +5,10 @@ import Hero from "./hero";
 import CategoriesSection from "./categories-section";
 import { Suspense } from "react";
 import CategoriesSkeleton from "../skeletons/categories.skeleton";
-import RecipeOfTheDay from "./recipe-of-the-day";
+import RecipeOfTheDaySection from "./recipe-of-the-day-section";
 import Footer from "./footer";
+import PopularRecipes from "./popular-recipes";
+import PopularRecipesSkeleton from "../skeletons/popular-recipes-skeleton";
 
 export default function HomePage() {
 	return (
@@ -16,6 +18,7 @@ export default function HomePage() {
 					variant="filled"
 					color="primary"
 					size="large"
+					link="/signup"
 					text="Get started"
 				/>
 			</NavContainer>{" "}
@@ -45,7 +48,21 @@ export default function HomePage() {
 				imageAlt="Content 2"
 				imagePriority={true}
 			/>
-			<RecipeOfTheDay />
+			<RecipeOfTheDaySection />
+			<TwoColumnContent
+				id="content1"
+				textLeft={true}
+				title="Widen Our 1,000+ collection of recipes"
+				text="Log in to unlock the full potential of our community by adding your own recipes. Share your favorite dishes with others, complete with step-by-step instructions, ingredients, photos, and personal tips. Inspire fellow food lovers and contribute to our growing collection of culinary delights."
+				buttonText="Log in to add your recipe"
+				buttonLink="/signin"
+				imageSrc="/images/content-3.webp"
+				imageAlt="Content 3"
+				imagePriority={true}
+			/>
+			<Suspense fallback={<PopularRecipesSkeleton />}>
+				<PopularRecipes />
+			</Suspense>
 			<Footer />
 		</>
 	);

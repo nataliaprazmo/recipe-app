@@ -1,7 +1,8 @@
 import {
+	buildRecipeFilterQueryString,
 	getFromEndpoint,
 	getFromEndpointById,
-} from "@/lib/utils/fetching.utils";
+} from "@/lib/utils";
 import { ENDPOINTS } from "../api/endpoints";
 import {
 	BasicRecipe,
@@ -48,7 +49,19 @@ export async function fetchRecipeOfTheDay() {
 	}
 }
 
-// export async function searchRecipes(filters: RecipeFilter) {}
+export async function fetchFilteredRecipes(filters: RecipeFilter) {
+	try {
+		const filteringEndpoint = buildRecipeFilterQueryString(filters);
+		const data = await getFromEndpoint<{
+			message: string;
+			filteredRecipes: BasicRecipe[];
+		}>(ENDPOINTS.RECIPES.FILTERED + "?" + filteringEndpoint);
+		return data.filteredRecipes;
+	} catch (error) {
+		console.error("Database Error:", error);
+		throw new Error("Failed to fetch filtered recipes.");
+	}
+}
 
 export async function fetchRecipeComments(recipeId: string) {
 	try {
@@ -60,18 +73,5 @@ export async function fetchRecipeComments(recipeId: string) {
 	} catch (error) {
 		console.error("Database Error:", error);
 		throw new Error("Failed to fetch recipe's comments.");
-	}
-}
-
-export async function fetchRecipeAverageRating(recipeId: string) {
-	try {
-		const data = await getFromEndpointById<{
-			message: string;
-			avgScore: number;
-		}>(ENDPOINTS.RECIPES.RATINGS.AVERAGE, recipeId);
-		return data.avgScore;
-	} catch (error) {
-		console.error("Database Error:", error);
-		throw new Error("Failed to fetch recipe's average rating.");
 	}
 }

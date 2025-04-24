@@ -14,7 +14,7 @@ interface FooterLinksProps {
 function FooterLinks({ title, links, icons, texts }: FooterLinksProps) {
 	return (
 		<div className="flex flex-col gap-1 w-fit">
-			<p className="text-p3 sm:text-p2 2xl:text-p1 text-grey-100 mb-1 2xl:mb-3">
+			<p className="text-p3 sm:text-p2 2xl:text-p1 text-grey-100 mb-1 2xl:mb-3 font-medium">
 				{title}
 			</p>
 			{texts &&

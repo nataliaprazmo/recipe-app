@@ -1,7 +1,4 @@
-import {
-	getFromEndpoint,
-	searchFromEndpoint,
-} from "@/lib/utils/fetching.utils";
+import { getFromEndpoint, searchFromEndpoint } from "@/lib/utils";
 import { ENDPOINTS } from "../api/endpoints";
 import { Ingredient } from "../types/data.types";
 

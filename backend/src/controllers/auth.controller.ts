@@ -10,7 +10,6 @@ class AuthController {
 		reply: FastifyReply
 	): Promise<void> {
 		try {
-			console.log(request.body);
 			const authResult = await this.authService.authenticateUser(
 				request.server,
 				request.body

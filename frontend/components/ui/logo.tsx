@@ -20,7 +20,7 @@ function Logo({ dark }: LogoProps) {
 				}}
 				alt="Logo"
 				loading="lazy"
-				className="w-20 h-[42px] xs:w-24 xs:h-[50px] sm:w-[137px] sm:h-18 xl:w-[152px] xl:h-20"
+				className="w-20 h-[42px] md:w-24 md:h-[50px] 3xl:w-[137px] 3xl:h-18 "
 			/>
 		</Link>
 	);

@@ -1,6 +1,5 @@
 import { ENDPOINTS } from "@/lib/api/endpoints";
-import { DifficultyLevel } from "@/lib/types/data.types";
-import { getFromEndpoint } from "@/lib/utils/fetching.utils";
+import { getFromEndpoint } from "@/lib/utils";
 
 export async function fetchDifficultyLevels() {
 	try {

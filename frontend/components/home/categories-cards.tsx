@@ -43,9 +43,9 @@ export default function CategoriesCards({
 			{categories.map((category, index) => (
 				<SwiperSlide
 					key={index}
-					className="relative w-full h-full cursor-pointer"
+					className="relative w-full h-full cursor-pointer rounded-3xl group overflow-clip"
 				>
-					<div className="bg-black bg-opacity-70 w-full h-full absolute top-0 left-0 rounded-3xl z-10" />
+					<div className="bg-black/70 group-hover:bg-black/35 w-full h-full absolute top-0 left-0 z-10" />
 					<Image
 						alt={`${category.name} category`}
 						src={`/images/${category.name
@@ -57,7 +57,7 @@ export default function CategoriesCards({
 							objectFit: "cover",
 						}}
 						loading="lazy"
-						className="w-full h-40 rounded-3xl shadow-s1"
+						className="w-full h-40 shadow-s1 object-cover transition-transform duration-300 group-hover:scale-105"
 					/>
 					<p className="text-p4 sm:text-p3 2xl:text-p1 font-bold z-20 absolute inset-0 flex items-center justify-center text-grey-100">
 						{category.name}
