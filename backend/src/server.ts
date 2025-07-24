@@ -1,14 +1,26 @@
 import Fastify from "fastify";
 import prisma from "./plugins/prisma";
+import fastifyJwt from "@fastify/jwt";
 import metadataRoutes from "./routes/metadata.route";
+import userRoutes from "./routes/user.route";
 
 const fastify = Fastify();
 
 // register plugins
 fastify.register(prisma);
 
+declare module "@fastify/jwt" {
+	interface FastifyJWT {
+		user: {
+			id: string;
+			email: string;
+		};
+	}
+}
+
 // register routes
 fastify.register(metadataRoutes, { prefix: "/api" });
+fastify.register(userRoutes, { prefix: "/api/users" });
 
 const port = parseInt(process.env.PORT || "5000");
 const host = process.env.HOST || "127.0.0.1";
